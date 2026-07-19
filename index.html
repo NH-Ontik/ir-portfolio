@@ -6,6 +6,7 @@
   <title>IR Research Portfolio — NH Ontik</title>
   <meta name="description" content="A unified dashboard tracking International Relations research projects — timelines, knowledge bases, and conflict visualisations.">
   <meta name="theme-color" content="#f5f0e8">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
@@ -59,7 +60,19 @@
     <div class="bento-grid">
 
       <!-- Knowledge Base — large card -->
-      <article class="card card--large" data-project="knowledge-base">
+      <div class="card-parent card-parent--large">
+        <div class="card-3d" data-project="knowledge-base">
+          <div class="card-glass"></div>
+          <div class="card-logo">
+            <span class="circle circle1"></span>
+            <span class="circle circle2"></span>
+            <span class="circle circle3"></span>
+            <span class="circle circle4"></span>
+            <span class="circle circle5">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="circle-icon"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+            </span>
+          </div>
+          <div class="card-content">
             <div class="card-header">
               <div class="card-status">
                 <span class="dot dot--live"></span>
@@ -83,20 +96,34 @@
                 <span class="card-metric-label">commits</span>
               </div>
             </div>
-            <div class="card-footer">
-              <div class="card-commit" id="kb-commit">
-                <span class="card-commit-msg">—</span>
-                <span class="card-commit-time">—</span>
-              </div>
-              <div class="card-links">
-                <a href="https://nh-ontik.github.io/international-relations-knowledge-base-by-nh-ontik" class="card-link" target="_blank" rel="noopener">Site</a>
-                <a href="https://github.com/NH-Ontik/international-relations-knowledge-base-by-nh-ontik" class="card-link card-link--repo" target="_blank" rel="noopener">Repo</a>
-              </div>
+          </div>
+          <div class="card-bottom">
+            <div class="card-commit" id="kb-commit">
+              <span class="card-commit-msg">—</span>
+              <span class="card-commit-time">—</span>
             </div>
-          </article>
+            <div class="card-links">
+              <a href="https://nh-ontik.github.io/international-relations-knowledge-base-by-nh-ontik" class="card-link" target="_blank" rel="noopener">Site</a>
+              <a href="https://github.com/NH-Ontik/international-relations-knowledge-base-by-nh-ontik" class="card-link card-link--repo" target="_blank" rel="noopener">Repo</a>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- IR History Atlas -->
-      <article class="card" data-project="history-atlas">
+      <div class="card-parent">
+        <div class="card-3d" data-project="history-atlas">
+          <div class="card-glass"></div>
+          <div class="card-logo">
+            <span class="circle circle1"></span>
+            <span class="circle circle2"></span>
+            <span class="circle circle3"></span>
+            <span class="circle circle4"></span>
+            <span class="circle circle5">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="circle-icon"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </span>
+          </div>
+          <div class="card-content">
             <div class="card-header">
               <div class="card-status">
                 <span class="dot dot--live"></span>
@@ -116,20 +143,34 @@
                 <span class="card-metric-label">commits</span>
               </div>
             </div>
-            <div class="card-footer">
-              <div class="card-commit" id="atlas-commit">
-                <span class="card-commit-msg">—</span>
-                <span class="card-commit-time">—</span>
-              </div>
-              <div class="card-links">
-                <a href="https://nh-ontik.github.io/ir-history-atlas" class="card-link" target="_blank" rel="noopener">Site</a>
-                <a href="https://github.com/NH-Ontik/ir-history-atlas" class="card-link card-link--repo" target="_blank" rel="noopener">Repo</a>
-              </div>
+          </div>
+          <div class="card-bottom">
+            <div class="card-commit" id="atlas-commit">
+              <span class="card-commit-msg">—</span>
+              <span class="card-commit-time">—</span>
             </div>
-          </article>
+            <div class="card-links">
+              <a href="https://nh-ontik.github.io/ir-history-atlas" class="card-link" target="_blank" rel="noopener">Site</a>
+              <a href="https://github.com/NH-Ontik/ir-history-atlas" class="card-link card-link--repo" target="_blank" rel="noopener">Repo</a>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- Ukraine War -->
-      <article class="card" data-project="ukraine-war">
+      <div class="card-parent">
+        <div class="card-3d" data-project="ukraine-war">
+          <div class="card-glass"></div>
+          <div class="card-logo">
+            <span class="circle circle1"></span>
+            <span class="circle circle2"></span>
+            <span class="circle circle3"></span>
+            <span class="circle circle4"></span>
+            <span class="circle circle5">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="circle-icon"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </span>
+          </div>
+          <div class="card-content">
             <div class="card-header">
               <div class="card-status">
                 <span class="dot dot--live"></span>
@@ -149,20 +190,34 @@
                 <span class="card-metric-label">commits</span>
               </div>
             </div>
-            <div class="card-footer">
-              <div class="card-commit" id="ukraine-commit">
-                <span class="card-commit-msg">—</span>
-                <span class="card-commit-time">—</span>
-              </div>
-              <div class="card-links">
-                <a href="https://nh-ontik.github.io/ukraine-war" class="card-link" target="_blank" rel="noopener">Site</a>
-                <a href="https://github.com/NH-Ontik/ukraine-war" class="card-link card-link--repo" target="_blank" rel="noopener">Repo</a>
-              </div>
+          </div>
+          <div class="card-bottom">
+            <div class="card-commit" id="ukraine-commit">
+              <span class="card-commit-msg">—</span>
+              <span class="card-commit-time">—</span>
             </div>
-          </article>
+            <div class="card-links">
+              <a href="https://nh-ontik.github.io/ukraine-war" class="card-link" target="_blank" rel="noopener">Site</a>
+              <a href="https://github.com/NH-Ontik/ukraine-war" class="card-link card-link--repo" target="_blank" rel="noopener">Repo</a>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- Cuban Missile Crisis -->
-      <article class="card" data-project="cuban-missile">
+      <div class="card-parent">
+        <div class="card-3d" data-project="cuban-missile">
+          <div class="card-glass"></div>
+          <div class="card-logo">
+            <span class="circle circle1"></span>
+            <span class="circle circle2"></span>
+            <span class="circle circle3"></span>
+            <span class="circle circle4"></span>
+            <span class="circle circle5">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="circle-icon"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </span>
+          </div>
+          <div class="card-content">
             <div class="card-header">
               <div class="card-status">
                 <span class="dot dot--live"></span>
@@ -182,17 +237,19 @@
                 <span class="card-metric-label">commits</span>
               </div>
             </div>
-            <div class="card-footer">
-              <div class="card-commit" id="cmc-commit">
-                <span class="card-commit-msg">—</span>
-                <span class="card-commit-time">—</span>
-              </div>
-              <div class="card-links">
-                <a href="https://nh-ontik.github.io/cuban-missile-crisis" class="card-link" target="_blank" rel="noopener">Site</a>
-                <a href="https://github.com/NH-Ontik/cuban-missile-crisis" class="card-link card-link--repo" target="_blank" rel="noopener">Repo</a>
-              </div>
+          </div>
+          <div class="card-bottom">
+            <div class="card-commit" id="cmc-commit">
+              <span class="card-commit-msg">—</span>
+              <span class="card-commit-time">—</span>
             </div>
-          </article>
+            <div class="card-links">
+              <a href="https://nh-ontik.github.io/cuban-missile-crisis" class="card-link" target="_blank" rel="noopener">Site</a>
+              <a href="https://github.com/NH-Ontik/cuban-missile-crisis" class="card-link card-link--repo" target="_blank" rel="noopener">Repo</a>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- Activity Feed -->
       <aside class="activity" aria-label="Recent activity">
