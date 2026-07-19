@@ -173,6 +173,18 @@ function initReveal() {
   targets.forEach((el) => observer.observe(el));
 }
 
+/* ─── FLIP CARD CLICK ─── */
+
+function initFlipCards() {
+  document.querySelectorAll('.flip-card').forEach((card) => {
+    card.addEventListener('click', (e) => {
+      // Don't flip if clicking a link
+      if (e.target.closest('a')) return;
+      card.classList.toggle('flipped');
+    });
+  });
+}
+
 /* ─── MAIN ─── */
 
 async function main() {
@@ -285,8 +297,9 @@ async function main() {
     renderLastUpdated(data.activity[0].date);
   }
 
-  // 4. Initialize scroll reveal
+  // 4. Initialize interactions
   initReveal();
+  initFlipCards();
 }
 
 document.addEventListener('DOMContentLoaded', main);

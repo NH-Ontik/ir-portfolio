@@ -157,6 +157,8 @@ img { display: block; max-width: 100%; }
   background: transparent;
   perspective: 1200px;
   position: relative;
+  cursor: pointer;
+  user-select: none;
 }
 .flip-card--large {
   grid-row: 1 / 2;
@@ -169,7 +171,7 @@ img { display: block; max-width: 100%; }
   transition: transform 0.8s var(--ease);
   transform-style: preserve-3d;
 }
-.flip-card:hover .flip-card-inner {
+.flip-card.flipped .flip-card-inner {
   transform: rotateY(180deg);
 }
 .flip-card-front,
@@ -587,7 +589,7 @@ img { display: block; max-width: 100%; }
   .flip-card-inner {
     transition: none;
   }
-  .flip-card:hover .flip-card-inner {
+  .flip-card.flipped .flip-card-inner {
     transform: none;
   }
 }
