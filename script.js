@@ -178,9 +178,16 @@ function initReveal() {
 function initFlipCards() {
   document.querySelectorAll('.flip-card').forEach((card) => {
     card.addEventListener('click', (e) => {
-      // Don't flip if clicking a link
       if (e.target.closest('a')) return;
       card.classList.toggle('flipped');
+      card.setAttribute('aria-expanded', card.classList.contains('flipped'));
+    });
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        card.classList.toggle('flipped');
+        card.setAttribute('aria-expanded', card.classList.contains('flipped'));
+      }
     });
   });
 }

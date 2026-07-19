@@ -12,7 +12,9 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <a href="#projects" class="skip-link">Skip to projects</a>
 
+  <main>
   <!-- ─── HERO ─── -->
   <header class="hero">
     <div class="hero-inner">
@@ -53,11 +55,11 @@
   </section>
 
   <!-- ─── BENTO GRID ─── -->
-  <section class="bento" aria-label="Projects">
+  <section class="bento" aria-label="Projects" id="projects">
     <div class="bento-grid">
 
       <!-- Knowledge Base — large card -->
-      <article class="flip-card flip-card--large" data-project="knowledge-base">
+      <article class="flip-card flip-card--large" data-project="knowledge-base" role="button" tabindex="0" aria-expanded="false" aria-label="IR Knowledge Base — click to view analytics">
         <div class="flip-card-inner">
           <div class="flip-card-front card">
             <div class="card-header">
@@ -119,7 +121,7 @@
       </article>
 
       <!-- IR History Atlas -->
-      <article class="flip-card" data-project="history-atlas">
+      <article class="flip-card" data-project="history-atlas" role="button" tabindex="0" aria-expanded="false" aria-label="IR History Atlas — click to view analytics">
         <div class="flip-card-inner">
           <div class="flip-card-front card">
             <div class="card-header">
@@ -177,7 +179,7 @@
       </article>
 
       <!-- Ukraine War -->
-      <article class="flip-card" data-project="ukraine-war">
+      <article class="flip-card" data-project="ukraine-war" role="button" tabindex="0" aria-expanded="false" aria-label="The Ukraine War — click to view analytics">
         <div class="flip-card-inner">
           <div class="flip-card-front card">
             <div class="card-header">
@@ -235,7 +237,7 @@
       </article>
 
       <!-- Cuban Missile Crisis -->
-      <article class="flip-card" data-project="cuban-missile">
+      <article class="flip-card" data-project="cuban-missile" role="button" tabindex="0" aria-expanded="false" aria-label="Cuban Missile Crisis — click to view analytics">
         <div class="flip-card-inner">
           <div class="flip-card-front card">
             <div class="card-header">
@@ -302,6 +304,7 @@
 
     </div>
   </section>
+  </main>
 
   <!-- ─── FOOTER ─── -->
   <footer class="footer">
