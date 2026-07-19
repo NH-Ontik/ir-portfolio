@@ -154,8 +154,6 @@ img { display: block; max-width: 100%; }
 
 /* ═══ FLIP CARDS ═══ */
 .flip-card {
-  background: transparent;
-  perspective: 1200px;
   position: relative;
   cursor: pointer;
   user-select: none;
@@ -167,16 +165,10 @@ img { display: block; max-width: 100%; }
 .flip-card-inner {
   position: relative;
   width: 100%;
-  transition: transform 0.8s var(--ease);
-  transform-style: preserve-3d;
-}
-.flip-card.flipped .flip-card-inner {
-  transform: rotateY(180deg);
 }
 .flip-card-front {
   position: relative;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+  z-index: 2;
 }
 .flip-card-back {
   position: absolute;
@@ -184,9 +176,48 @@ img { display: block; max-width: 100%; }
   left: 0;
   width: 100%;
   height: 100%;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transform: rotateY(180deg);
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s var(--ease);
+}
+/* corner pseudo-elements on the inner wrapper */
+.flip-card-inner::before,
+.flip-card-inner::after {
+  position: absolute;
+  content: "";
+  width: 20%;
+  height: 20%;
+  z-index: 3;
+  transition: all 0.5s var(--ease);
+  pointer-events: none;
+}
+.flip-card-inner::before {
+  top: 0;
+  right: 0;
+  background: var(--accent);
+  border-radius: 0 15px 0 100%;
+}
+.flip-card-inner::after {
+  bottom: 0;
+  left: 0;
+  background: var(--border);
+  border-radius: 0 100% 0 15px;
+}
+/* expanded state on click */
+.flip-card.flipped .flip-card-front {
+  opacity: 0;
+  pointer-events: none;
+}
+.flip-card.flipped .flip-card-back {
+  opacity: 1;
+  pointer-events: auto;
+}
+.flip-card.flipped .flip-card-inner::before,
+.flip-card.flipped .flip-card-inner::after {
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
 }
 
 /* ═══ CARDS ═══ */
