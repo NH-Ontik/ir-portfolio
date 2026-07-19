@@ -48,7 +48,14 @@
           "message": "Update Quartz engine to latest v5 branch",
           "sha": "ccc7358"
         }
-      ]
+      ],
+      "analytics": {
+        "uniqueVisitors": 0,
+        "totalRequests": 0,
+        "pageViews": 0,
+        "bandwidth": "0B",
+        "topPages": []
+      }
     },
     "history-atlas": {
       "label": "IR History Atlas",
@@ -80,7 +87,14 @@
           "message": "IR History Atlas — 173-event interactive timeline with YouTube explainer links",
           "sha": "07b02bd"
         }
-      ]
+      ],
+      "analytics": {
+        "uniqueVisitors": 0,
+        "totalRequests": 0,
+        "pageViews": 0,
+        "bandwidth": "0B",
+        "topPages": []
+      }
     },
     "ukraine-war": {
       "label": "The Ukraine War",
@@ -130,7 +144,14 @@
           "message": "Replace stats section with live war duration countdown + key stats",
           "sha": "4b2f71e"
         }
-      ]
+      ],
+      "analytics": {
+        "uniqueVisitors": 0,
+        "totalRequests": 0,
+        "pageViews": 0,
+        "bandwidth": "0B",
+        "topPages": []
+      }
     },
     "cuban-missile": {
       "label": "Cuban Missile Crisis",
@@ -168,7 +189,14 @@
           "message": "Initial commit: Cuban Missile Crisis interactive narrative",
           "sha": "512061a"
         }
-      ]
+      ],
+      "analytics": {
+        "uniqueVisitors": 0,
+        "totalRequests": 0,
+        "pageViews": 0,
+        "bandwidth": "0B",
+        "topPages": []
+      }
     }
   },
   "activity": [
@@ -238,5 +266,5 @@
     "notes": 233,
     "words": "62k"
   },
-  "fetchedAt": "2026-07-19T11:56:24Z"
+  "fetchedAt": "2026-07-19T11:59:28Z"
 }
