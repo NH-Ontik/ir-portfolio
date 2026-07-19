@@ -167,7 +167,6 @@ jobs:
                 ) {
                   sum {
                     requests
-                    uniques
                     pageViews
                     bytes
                   }
@@ -204,7 +203,8 @@ jobs:
 
           # Parse summary (handle missing data gracefully)
           REQUESTS=$(echo "$RESPONSE" | jq -r '.data.viewer.zones[0].httpRequests1dGroups[0].sum.requests // 0' 2>/dev/null || echo "0")
-          VISITORS=$(echo "$RESPONSE" | jq -r '.data.viewer.zones[0].httpRequests1dGroups[0].sum.uniques // 0' 2>/dev/null || echo "0")
+          # Note: unique visitors not available in httpRequests1dGroups GraphQL API
+          VISITORS=0
           PAGEVIEWS=$(echo "$RESPONSE" | jq -r '.data.viewer.zones[0].httpRequests1dGroups[0].sum.pageViews // 0' 2>/dev/null || echo "0")
           BYTES=$(echo "$RESPONSE" | jq -r '.data.viewer.zones[0].httpRequests1dGroups[0].sum.bytes // 0' 2>/dev/null || echo "0")
 
