@@ -244,123 +244,126 @@ img { display: block; max-width: 100%; }
   border-radius: 12px;
 }
 
-/* ═══ 3D CARDS ═══ */
-.card-parent {
-  perspective: 1000px;
+/* ═══ CARDS ═══ */
+.card {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: var(--bg-alt);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.5s ease-in-out;
+  min-height: 180px;
 }
 .card-parent--large {
   grid-row: 1 / 2;
   grid-column: 1 / 2;
 }
-.card-3d {
-  position: relative;
-  border-radius: 20px;
-  background: linear-gradient(135deg, var(--surface) 0%, var(--bg-alt) 100%);
-  padding: clamp(1.5rem, 3vw, 2.25rem);
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  height: 100%;
-  transform-style: preserve-3d;
-  transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
-  box-shadow: var(--shadow) 0 8px 25px -8px, var(--shadow-2) 0 15px 25px -5px;
-  overflow: hidden;
-}
-.card-parent:hover .card-3d {
-  transform: rotate3d(1, 1, 0, 8deg);
-  box-shadow: var(--shadow-2) 20px 40px 25px -20px, rgba(44, 36, 24, .08) 0 25px 30px 0;
-}
 
-/* Glass overlay */
-.card-glass {
-  transform-style: preserve-3d;
+/* Animated border */
+.border {
   position: absolute;
-  inset: 8px;
-  border-radius: 22px;
-  border-top-right-radius: 100%;
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.65) 100%);
-  transform: translate3d(0px, 0px, 15px);
-  border-left: 1px solid rgba(255, 255, 255, 0.5);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  inset: 0;
+  border: 2px solid var(--accent);
+  opacity: 0;
+  transform: rotate(4deg);
+  transition: all 0.5s ease-in-out;
   pointer-events: none;
-  z-index: 0;
-  transition: transform 0.5s var(--ease);
+  z-index: 3;
 }
 
-/* Decorative circles — top-right */
-.card-logo {
+/* Card icon */
+.card-icon {
   position: absolute;
-  right: 0;
-  top: 0;
-  transform-style: preserve-3d;
-  z-index: 1;
-}
-.circle {
-  display: block;
-  position: absolute;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  top: 0;
-  right: 0;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  background: rgba(122, 88, 40, 0.08);
-  box-shadow: rgba(100, 100, 111, 0.1) -6px 6px 16px 0;
-  transition: transform 0.5s var(--ease);
-}
-.circle1 { width: 170px; transform: translate3d(0, 0, 10px); top: 8px; right: 8px; }
-.circle2 { width: 140px; transform: translate3d(0, 0, 20px); top: 10px; right: 10px; transition-delay: 0.4s; }
-.circle3 { width: 110px; transform: translate3d(0, 0, 30px); top: 17px; right: 17px; transition-delay: 0.8s; }
-.circle4 { width: 80px; transform: translate3d(0, 0, 40px); top: 23px; right: 23px; transition-delay: 1.2s; }
-.circle5 {
-  width: 50px;
-  transform: translate3d(0, 0, 50px);
-  top: 30px;
-  right: 30px;
-  display: grid;
-  place-content: center;
-  transition-delay: 1.6s;
-}
-.circle-icon {
-  width: 20px;
+  top: clamp(1rem, 2vw, 1.5rem);
+  right: clamp(1rem, 2vw, 1.5rem);
+  width: 32px;
+  height: 32px;
   color: var(--accent);
+  opacity: 0.2;
+  transition: all 0.5s ease-in-out;
 }
-.card-parent:hover .circle2 { transform: translate3d(0, 0, 40px); }
-.card-parent:hover .circle3 { transform: translate3d(0, 0, 60px); }
-.card-parent:hover .circle4 { transform: translate3d(0, 0, 80px); }
-.card-parent:hover .circle5 { transform: translate3d(0, 0, 100px); }
 
-/* Card content */
-.card-content {
-  transform: translate3d(0, 0, 16px);
+/* Card title — always visible */
+.card-title {
   position: relative;
   z-index: 2;
-  flex: 1;
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--text);
+  padding: clamp(1rem, 2vw, 1.5rem);
+  padding-bottom: 0;
+  transition: all 0.5s ease-in-out;
 }
-.card-bottom {
-  transform-style: preserve-3d;
+
+/* Details — hidden by default, shown on hover */
+.card-details {
+  position: relative;
+  z-index: 2;
+  padding: 0 clamp(1rem, 2vw, 1.5rem);
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.5s ease-in-out;
+}
+
+/* Bottom tagline — hidden by default */
+.bottom-text {
+  position: absolute;
+  left: 50%;
+  bottom: 13px;
+  transform: translateX(-50%);
+  font-size: 6px;
+  text-transform: uppercase;
+  padding: 0 5px 0 8px;
+  color: var(--accent);
+  background: var(--bg-alt);
+  opacity: 0;
+  letter-spacing: 7px;
+  transition: all 0.5s ease-in-out;
+  z-index: 4;
+  white-space: nowrap;
+}
+
+/* Links — inside card, always visible */
+.card-links {
   position: relative;
   z-index: 2;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--border);
-  transform: translate3d(0, 0, 16px);
-}
-.card-parent:hover .card-bottom {
-  transform: translate3d(0, 0, 30px);
+  gap: 0.4rem;
+  padding: clamp(0.75rem, 1.5vw, 1rem) clamp(1rem, 2vw, 1.5rem);
+  padding-bottom: clamp(1rem, 2vw, 1.5rem);
 }
 
-/* Card header */
-.card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
+/* ─── HOVER STATE ─── */
+.card:hover {
+  border-radius: 0;
+  transform: scale(1.05);
 }
+.card:hover .border {
+  inset: 12px;
+  opacity: 1;
+  transform: rotate(0);
+}
+.card:hover .card-icon {
+  opacity: 0.5;
+  transform: scale(1.1);
+}
+.card:hover .card-details {
+  max-height: 400px;
+  opacity: 1;
+  padding-top: 0.6rem;
+}
+.card:hover .bottom-text {
+  letter-spacing: 3px;
+  opacity: 1;
+  transform: translateX(-50%);
+}
+
+/* Card sub-elements */
 .card-status {
   display: flex;
   align-items: center;
@@ -370,47 +373,31 @@ img { display: block; max-width: 100%; }
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--text-3);
+  margin-bottom: 0.5rem;
 }
 .card-badge {
   font-size: 0.65rem;
   font-weight: 500;
   padding: 0.2em 0.6em;
   border-radius: 4px;
-  background: var(--bg-alt);
-  color: var(--text-3);
+  background: rgba(122, 88, 40, .1);
+  color: var(--accent);
   letter-spacing: 0.04em;
 }
-
-.card-title {
-  font-size: clamp(1.25rem, 2.5vw, 1.65rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-  color: var(--text);
-}
-.card--large .card-title {
-  font-size: clamp(1.5rem, 3vw, 2rem);
-}
-
 .card-desc {
   font-family: var(--serif);
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   color: var(--text-2);
   line-height: 1.6;
   max-width: 50ch;
+  margin-bottom: 0.5rem;
 }
-.card--large .card-desc {
-  font-size: 1rem;
-  max-width: 55ch;
-}
-
-/* Card metrics */
 .card-metrics {
   display: flex;
-  gap: clamp(1.2rem, 3vw, 2.5rem);
-  margin-top: 0.5rem;
-  padding-top: 0.75rem;
+  gap: clamp(1rem, 2vw, 2rem);
+  padding-top: 0.6rem;
   border-top: 1px solid var(--border);
+  margin-bottom: 0.5rem;
 }
 .card-metric {
   display: flex;
@@ -418,14 +405,11 @@ img { display: block; max-width: 100%; }
   gap: 0.1rem;
 }
 .card-metric-value {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--text);
   line-height: 1.1;
-}
-.card--large .card-metric-value {
-  font-size: 1.5rem;
 }
 .card-metric-label {
   font-size: 0.65rem;
@@ -434,13 +418,10 @@ img { display: block; max-width: 100%; }
   letter-spacing: 0.1em;
   color: var(--text-3);
 }
-
 .card-commit {
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
-  min-width: 0;
-  flex: 1;
 }
 .card-commit-msg {
   font-size: 0.78rem;
@@ -452,11 +433,6 @@ img { display: block; max-width: 100%; }
 .card-commit-time {
   font-size: 0.68rem;
   color: var(--text-3);
-}
-.card-links {
-  display: flex;
-  gap: 0.4rem;
-  flex-shrink: 0;
 }
 .learn-more {
   position: relative;
@@ -625,7 +601,7 @@ img { display: block; max-width: 100%; }
   .bento-grid {
     grid-template-columns: 1fr;
   }
-  .card--large {
+  .card-parent--large {
     grid-row: auto;
     grid-column: auto;
   }
@@ -641,17 +617,12 @@ img { display: block; max-width: 100%; }
   .stats-bar-inner {
     grid-template-columns: 1fr 1fr;
   }
-  .card-bottom {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.75rem;
-  }
   .card-links {
-    width: 100%;
+    flex-direction: column;
+    gap: 0.5rem;
   }
   .learn-more {
-    flex: 1;
-    text-align: center;
+    width: 100%;
   }
   .activity-item {
     grid-template-columns: auto 1fr;
