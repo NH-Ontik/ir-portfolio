@@ -167,20 +167,16 @@ img { display: block; max-width: 100%; }
 .flip-card-inner {
   position: relative;
   width: 100%;
-  height: 100%;
   transition: transform 0.8s var(--ease);
   transform-style: preserve-3d;
 }
 .flip-card.flipped .flip-card-inner {
   transform: rotateY(180deg);
 }
-.flip-card-front,
-.flip-card-back {
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
 .flip-card-front {
   position: relative;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 .flip-card-back {
   position: absolute;
@@ -188,6 +184,8 @@ img { display: block; max-width: 100%; }
   left: 0;
   width: 100%;
   height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   transform: rotateY(180deg);
 }
 
