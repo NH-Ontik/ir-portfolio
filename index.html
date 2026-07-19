@@ -57,137 +57,269 @@
     <div class="bento-grid">
 
       <!-- Knowledge Base — large card -->
-      <article class="card card--large" data-project="knowledge-base">
-        <div class="card-header">
-          <div class="card-status">
-            <span class="dot dot--live"></span>
-            <span class="card-status-text">Live</span>
+      <article class="flip-card flip-card--large" data-project="knowledge-base">
+        <div class="flip-card-inner">
+          <div class="flip-card-front card">
+            <div class="card-header">
+              <div class="card-status">
+                <span class="dot dot--live"></span>
+                <span class="card-status-text">Live</span>
+              </div>
+              <span class="card-badge">Quartz</span>
+            </div>
+            <h2 class="card-title">IR Knowledge Base</h2>
+            <p class="card-desc">233 interconnected notes covering IR theories, case studies, methodology, and course material. Built on Quartz from an Obsidian vault.</p>
+            <div class="card-metrics">
+              <div class="card-metric">
+                <span class="card-metric-value" id="kb-notes">233</span>
+                <span class="card-metric-label">notes</span>
+              </div>
+              <div class="card-metric">
+                <span class="card-metric-value" id="kb-words">62k</span>
+                <span class="card-metric-label">words</span>
+              </div>
+              <div class="card-metric">
+                <span class="card-metric-value" id="kb-commits">—</span>
+                <span class="card-metric-label">commits</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="card-commit" id="kb-commit">
+                <span class="card-commit-msg">—</span>
+                <span class="card-commit-time">—</span>
+              </div>
+              <div class="card-links">
+                <a href="https://nh-ontik.github.io/international-relations-knowledge-base-by-nh-ontik" class="card-link" target="_blank" rel="noopener">Site</a>
+                <a href="https://github.com/NH-Ontik/international-relations-knowledge-base-by-nh-ontik" class="card-link card-link--repo" target="_blank" rel="noopener">Repo</a>
+              </div>
+            </div>
           </div>
-          <span class="card-badge">Quartz</span>
-        </div>
-        <h2 class="card-title">IR Knowledge Base</h2>
-        <p class="card-desc">233 interconnected notes covering IR theories, case studies, methodology, and course material. Built on Quartz from an Obsidian vault.</p>
-        <div class="card-metrics">
-          <div class="card-metric">
-            <span class="card-metric-value" id="kb-notes">233</span>
-            <span class="card-metric-label">notes</span>
-          </div>
-          <div class="card-metric">
-            <span class="card-metric-value" id="kb-words">62k</span>
-            <span class="card-metric-label">words</span>
-          </div>
-          <div class="card-metric">
-            <span class="card-metric-value" id="kb-commits">—</span>
-            <span class="card-metric-label">commits</span>
-          </div>
-        </div>
-        <div class="card-footer">
-          <div class="card-commit" id="kb-commit">
-            <span class="card-commit-msg">—</span>
-            <span class="card-commit-time">—</span>
-          </div>
-          <div class="card-links">
-            <a href="https://nh-ontik.github.io/international-relations-knowledge-base-by-nh-ontik" class="card-link" target="_blank" rel="noopener">Site</a>
-            <a href="https://github.com/NH-Ontik/international-relations-knowledge-base-by-nh-ontik" class="card-link card-link--repo" target="_blank" rel="noopener">Repo</a>
+          <div class="flip-card-back card">
+            <div class="analytics-header">
+              <span class="analytics-title">Analytics</span>
+              <span class="analytics-period">Last 7 days</span>
+            </div>
+            <div class="analytics-grid">
+              <div class="analytics-stat">
+                <span class="analytics-stat-value" id="kb-visitors">—</span>
+                <span class="analytics-stat-label">Unique Visitors</span>
+              </div>
+              <div class="analytics-stat">
+                <span class="analytics-stat-value" id="kb-requests">—</span>
+                <span class="analytics-stat-label">Total Requests</span>
+              </div>
+              <div class="analytics-stat">
+                <span class="analytics-stat-value" id="kb-pageviews">—</span>
+                <span class="analytics-stat-label">Page Views</span>
+              </div>
+              <div class="analytics-stat">
+                <span class="analytics-stat-value" id="kb-bandwidth">—</span>
+                <span class="analytics-stat-label">Bandwidth</span>
+              </div>
+            </div>
+            <div class="analytics-top-pages" id="kb-top-pages">
+              <span class="analytics-subtitle">Top Pages</span>
+              <ul class="analytics-page-list"></ul>
+            </div>
+            <div class="analytics-footer">Hover to flip back</div>
           </div>
         </div>
       </article>
 
       <!-- IR History Atlas -->
-      <article class="card" data-project="history-atlas">
-        <div class="card-header">
-          <div class="card-status">
-            <span class="dot dot--live"></span>
-            <span class="card-status-text">Live</span>
+      <article class="flip-card" data-project="history-atlas">
+        <div class="flip-card-inner">
+          <div class="flip-card-front card">
+            <div class="card-header">
+              <div class="card-status">
+                <span class="dot dot--live"></span>
+                <span class="card-status-text">Live</span>
+              </div>
+              <span class="card-badge">HTML/JS</span>
+            </div>
+            <h2 class="card-title">IR History Atlas</h2>
+            <p class="card-desc">173 events spanning from the Agricultural Revolution to the present — the definitive IR timeline.</p>
+            <div class="card-metrics">
+              <div class="card-metric">
+                <span class="card-metric-value" id="atlas-events">173</span>
+                <span class="card-metric-label">events</span>
+              </div>
+              <div class="card-metric">
+                <span class="card-metric-value" id="atlas-commits">—</span>
+                <span class="card-metric-label">commits</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="card-commit" id="atlas-commit">
+                <span class="card-commit-msg">—</span>
+                <span class="card-commit-time">—</span>
+              </div>
+              <div class="card-links">
+                <a href="https://nh-ontik.github.io/ir-history-atlas" class="card-link" target="_blank" rel="noopener">Site</a>
+                <a href="https://github.com/NH-Ontik/ir-history-atlas" class="card-link card-link--repo" target="_blank" rel="noopener">Repo</a>
+              </div>
+            </div>
           </div>
-          <span class="card-badge">HTML/JS</span>
-        </div>
-        <h2 class="card-title">IR History Atlas</h2>
-        <p class="card-desc">173 events spanning from the Agricultural Revolution to the present — the definitive IR timeline.</p>
-        <div class="card-metrics">
-          <div class="card-metric">
-            <span class="card-metric-value" id="atlas-events">173</span>
-            <span class="card-metric-label">events</span>
-          </div>
-          <div class="card-metric">
-            <span class="card-metric-value" id="atlas-commits">—</span>
-            <span class="card-metric-label">commits</span>
-          </div>
-        </div>
-        <div class="card-footer">
-          <div class="card-commit" id="atlas-commit">
-            <span class="card-commit-msg">—</span>
-            <span class="card-commit-time">—</span>
-          </div>
-          <div class="card-links">
-            <a href="https://nh-ontik.github.io/ir-history-atlas" class="card-link" target="_blank" rel="noopener">Site</a>
-            <a href="https://github.com/NH-Ontik/ir-history-atlas" class="card-link card-link--repo" target="_blank" rel="noopener">Repo</a>
+          <div class="flip-card-back card">
+            <div class="analytics-header">
+              <span class="analytics-title">Analytics</span>
+              <span class="analytics-period">Last 7 days</span>
+            </div>
+            <div class="analytics-grid">
+              <div class="analytics-stat">
+                <span class="analytics-stat-value" id="atlas-visitors">—</span>
+                <span class="analytics-stat-label">Unique Visitors</span>
+              </div>
+              <div class="analytics-stat">
+                <span class="analytics-stat-value" id="atlas-requests">—</span>
+                <span class="analytics-stat-label">Total Requests</span>
+              </div>
+              <div class="analytics-stat">
+                <span class="analytics-stat-value" id="atlas-pageviews">—</span>
+                <span class="analytics-stat-label">Page Views</span>
+              </div>
+              <div class="analytics-stat">
+                <span class="analytics-stat-value" id="atlas-bandwidth">—</span>
+                <span class="analytics-stat-label">Bandwidth</span>
+              </div>
+            </div>
+            <div class="analytics-top-pages" id="atlas-top-pages">
+              <span class="analytics-subtitle">Top Pages</span>
+              <ul class="analytics-page-list"></ul>
+            </div>
+            <div class="analytics-footer">Hover to flip back</div>
           </div>
         </div>
       </article>
 
       <!-- Ukraine War -->
-      <article class="card" data-project="ukraine-war">
-        <div class="card-header">
-          <div class="card-status">
-            <span class="dot dot--live"></span>
-            <span class="card-status-text">Live</span>
+      <article class="flip-card" data-project="ukraine-war">
+        <div class="flip-card-inner">
+          <div class="flip-card-front card">
+            <div class="card-header">
+              <div class="card-status">
+                <span class="dot dot--live"></span>
+                <span class="card-status-text">Live</span>
+              </div>
+              <span class="card-badge">HTML/CSS/JS</span>
+            </div>
+            <h2 class="card-title">The Ukraine War</h2>
+            <p class="card-desc">Interactive visualisation of Europe's largest conflict since 1945. Timeline, key players, IR theories, and live duration counter.</p>
+            <div class="card-metrics">
+              <div class="card-metric">
+                <span class="card-metric-value" id="ukraine-events">20</span>
+                <span class="card-metric-label">timeline events</span>
+              </div>
+              <div class="card-metric">
+                <span class="card-metric-value" id="ukraine-commits">—</span>
+                <span class="card-metric-label">commits</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="card-commit" id="ukraine-commit">
+                <span class="card-commit-msg">—</span>
+                <span class="card-commit-time">—</span>
+              </div>
+              <div class="card-links">
+                <a href="https://nh-ontik.github.io/ukraine-war" class="card-link" target="_blank" rel="noopener">Site</a>
+                <a href="https://github.com/NH-Ontik/ukraine-war" class="card-link card-link--repo" target="_blank" rel="noopener">Repo</a>
+              </div>
+            </div>
           </div>
-          <span class="card-badge">HTML/CSS/JS</span>
-        </div>
-        <h2 class="card-title">The Ukraine War</h2>
-        <p class="card-desc">Interactive visualisation of Europe's largest conflict since 1945. Timeline, key players, IR theories, and live duration counter.</p>
-        <div class="card-metrics">
-          <div class="card-metric">
-            <span class="card-metric-value" id="ukraine-events">20</span>
-            <span class="card-metric-label">timeline events</span>
-          </div>
-          <div class="card-metric">
-            <span class="card-metric-value" id="ukraine-commits">—</span>
-            <span class="card-metric-label">commits</span>
-          </div>
-        </div>
-        <div class="card-footer">
-          <div class="card-commit" id="ukraine-commit">
-            <span class="card-commit-msg">—</span>
-            <span class="card-commit-time">—</span>
-          </div>
-          <div class="card-links">
-            <a href="https://nh-ontik.github.io/ukraine-war" class="card-link" target="_blank" rel="noopener">Site</a>
-            <a href="https://github.com/NH-Ontik/ukraine-war" class="card-link card-link--repo" target="_blank" rel="noopener">Repo</a>
+          <div class="flip-card-back card">
+            <div class="analytics-header">
+              <span class="analytics-title">Analytics</span>
+              <span class="analytics-period">Last 7 days</span>
+            </div>
+            <div class="analytics-grid">
+              <div class="analytics-stat">
+                <span class="analytics-stat-value" id="ukraine-visitors">—</span>
+                <span class="analytics-stat-label">Unique Visitors</span>
+              </div>
+              <div class="analytics-stat">
+                <span class="analytics-stat-value" id="ukraine-requests">—</span>
+                <span class="analytics-stat-label">Total Requests</span>
+              </div>
+              <div class="analytics-stat">
+                <span class="analytics-stat-value" id="ukraine-pageviews">—</span>
+                <span class="analytics-stat-label">Page Views</span>
+              </div>
+              <div class="analytics-stat">
+                <span class="analytics-stat-value" id="ukraine-bandwidth">—</span>
+                <span class="analytics-stat-label">Bandwidth</span>
+              </div>
+            </div>
+            <div class="analytics-top-pages" id="ukraine-top-pages">
+              <span class="analytics-subtitle">Top Pages</span>
+              <ul class="analytics-page-list"></ul>
+            </div>
+            <div class="analytics-footer">Hover to flip back</div>
           </div>
         </div>
       </article>
 
       <!-- Cuban Missile Crisis -->
-      <article class="card" data-project="cuban-missile">
-        <div class="card-header">
-          <div class="card-status">
-            <span class="dot dot--live"></span>
-            <span class="card-status-text">Live</span>
+      <article class="flip-card" data-project="cuban-missile">
+        <div class="flip-card-inner">
+          <div class="flip-card-front card">
+            <div class="card-header">
+              <div class="card-status">
+                <span class="dot dot--live"></span>
+                <span class="card-status-text">Live</span>
+              </div>
+              <span class="card-badge">HTML/CSS/JS</span>
+            </div>
+            <h2 class="card-title">Cuban Missile Crisis</h2>
+            <p class="card-desc">13 days that stopped the world. Interactive narrative of the closest the Cold War came to nuclear war.</p>
+            <div class="card-metrics">
+              <div class="card-metric">
+                <span class="card-metric-value" id="cmc-days">13</span>
+                <span class="card-metric-label">days covered</span>
+              </div>
+              <div class="card-metric">
+                <span class="card-metric-value" id="cmc-commits">—</span>
+                <span class="card-metric-label">commits</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="card-commit" id="cmc-commit">
+                <span class="card-commit-msg">—</span>
+                <span class="card-commit-time">—</span>
+              </div>
+              <div class="card-links">
+                <a href="https://nh-ontik.github.io/cuban-missile-crisis" class="card-link" target="_blank" rel="noopener">Site</a>
+                <a href="https://github.com/NH-Ontik/cuban-missile-crisis" class="card-link card-link--repo" target="_blank" rel="noopener">Repo</a>
+              </div>
+            </div>
           </div>
-          <span class="card-badge">HTML/CSS/JS</span>
-        </div>
-        <h2 class="card-title">Cuban Missile Crisis</h2>
-        <p class="card-desc">13 days that stopped the world. Interactive narrative of the closest the Cold War came to nuclear war.</p>
-        <div class="card-metrics">
-          <div class="card-metric">
-            <span class="card-metric-value" id="cmc-days">13</span>
-            <span class="card-metric-label">days covered</span>
-          </div>
-          <div class="card-metric">
-            <span class="card-metric-value" id="cmc-commits">—</span>
-            <span class="card-metric-label">commits</span>
-          </div>
-        </div>
-        <div class="card-footer">
-          <div class="card-commit" id="cmc-commit">
-            <span class="card-commit-msg">—</span>
-            <span class="card-commit-time">—</span>
-          </div>
-          <div class="card-links">
-            <a href="https://nh-ontik.github.io/cuban-missile-crisis" class="card-link" target="_blank" rel="noopener">Site</a>
-            <a href="https://github.com/NH-Ontik/cuban-missile-crisis" class="card-link card-link--repo" target="_blank" rel="noopener">Repo</a>
+          <div class="flip-card-back card">
+            <div class="analytics-header">
+              <span class="analytics-title">Analytics</span>
+              <span class="analytics-period">Last 7 days</span>
+            </div>
+            <div class="analytics-grid">
+              <div class="analytics-stat">
+                <span class="analytics-stat-value" id="cmc-visitors">—</span>
+                <span class="analytics-stat-label">Unique Visitors</span>
+              </div>
+              <div class="analytics-stat">
+                <span class="analytics-stat-value" id="cmc-requests">—</span>
+                <span class="analytics-stat-label">Total Requests</span>
+              </div>
+              <div class="analytics-stat">
+                <span class="analytics-stat-value" id="cmc-pageviews">—</span>
+                <span class="analytics-stat-label">Page Views</span>
+              </div>
+              <div class="analytics-stat">
+                <span class="analytics-stat-value" id="cmc-bandwidth">—</span>
+                <span class="analytics-stat-label">Bandwidth</span>
+              </div>
+            </div>
+            <div class="analytics-top-pages" id="cmc-top-pages">
+              <span class="analytics-subtitle">Top Pages</span>
+              <ul class="analytics-page-list"></ul>
+            </div>
+            <div class="analytics-footer">Hover to flip back</div>
           </div>
         </div>
       </article>

@@ -32,11 +32,21 @@ jobs:
             "The Ukraine War"
             "Cuban Missile Crisis"
           )
+          ZONE_KEYS=(
+            "knowledge-base"
+            "history-atlas"
+            "ukraine-war"
+            "cuban-missile"
+          )
           STATIC_NOTES=233
           STATIC_WORDS="62k"
           STATIC_EVENTS_1=173
           STATIC_EVENTS_2=20
           STATIC_DAYS=13
+
+          # Date range for Cloudflare (last 7 days)
+          DATE_UNTIL=$(date -u +%Y-%m-%d)
+          DATE_SINCE=$(date -u -d '7 days ago' +%Y-%m-%d 2>/dev/null || date -u -v-7d +%Y-%m-%d)
 
           # Start JSON
           echo '{ "projects": {}, "activity": [], "totals": {}, "fetchedAt": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'" }' > project-data.json
@@ -117,7 +127,121 @@ jobs:
              '.totals = {events: ($events | tonumber), notes: ($notes | tonumber), words: $words}' \
              project-data.json > tmp.json && mv tmp.json project-data.json
 
-          echo "Generated project-data.json:"
+          echo "Generated project-data.json (pre-analytics):"
+          jq '.' project-data.json
+
+      - name: Fetch Cloudflare analytics
+        if: env.CFLARE_API_TOKEN != ''
+        env:
+          CFLARE_API_TOKEN: ${{ secrets.CFLARE_API_TOKEN }}
+        run: |
+          ZONE_KEYS=("knowledge-base" "history-atlas" "ukraine-war" "cuban-missile")
+          ZONE_IDS=(
+            "${{ secrets.CFLARE_ZONE_KB }}"
+            "${{ secrets.CFLARE_ZONE_ATLAS }}"
+            "${{ secrets.CFLARE_ZONE_UKRAINE }}"
+            "${{ secrets.CFLARE_ZONE_CUBA }}"
+          )
+          DATE_UNTIL=$(date -u +%Y-%m-%d)
+          DATE_SINCE=$(date -u -d '7 days ago' +%Y-%m-%d 2>/dev/null || date -u -v-7d +%Y-%m-%d)
+
+          for i in "${!ZONE_KEYS[@]}"; do
+            KEY="${ZONE_KEYS[$i]}"
+            ZONE_ID="${ZONE_IDS[$i]}"
+
+            if [ -z "$ZONE_ID" ]; then
+              echo "No zone ID for $KEY, skipping"
+              continue
+            fi
+
+            echo "Fetching Cloudflare analytics for $KEY (zone: $ZONE_ID)..."
+
+            # GraphQL query: summary stats + top pages
+            QUERY=$(cat <<EOF
+          {
+            viewer {
+              zones(filter: {zoneTag: "$ZONE_ID"}) {
+                httpRequests1dGroups(
+                  limit: 1,
+                  filter: {date_geq: "$DATE_SINCE", date_leq: "$DATE_UNTIL"}
+                ) {
+                  sum {
+                    requests
+                    visitors
+                    pageViews
+                    bytes
+                  }
+                }
+                httpRequests1d(
+                  limit: 5,
+                  filter: {date_geq: "$DATE_SINCE", date_leq: "$DATE_UNTIL"},
+                  orderBy: [requests_DESC]
+                ) {
+                  dimensions {
+                    clientRequestURI
+                  }
+                  sum {
+                    requests
+                  }
+                }
+              }
+            }
+          }
+          EOF
+          )
+
+            RESPONSE=$(curl -s -X POST "https://api.cloudflare.com/client/v4/graphql" \
+              -H "Authorization: Bearer $CFLARE_API_TOKEN" \
+              -H "Content-Type: application/json" \
+              -d "$(jq -n --arg q "$QUERY" '{"query": $q}')")
+
+            # Parse summary
+            REQUESTS=$(echo "$RESPONSE" | jq -r '.data.viewer.zones[0].httpRequests1dGroups[0].sum.requests // 0')
+            VISITORS=$(echo "$RESPONSE" | jq -r '.data.viewer.zones[0].httpRequests1dGroups[0].sum.visitors // 0')
+            PAGEVIEWS=$(echo "$RESPONSE" | jq -r '.data.viewer.zones[0].httpRequests1dGroups[0].sum.pageViews // 0')
+            BYTES=$(echo "$RESPONSE" | jq -r '.data.viewer.zones[0].httpRequests1dGroups[0].sum.bytes // 0')
+
+            # Format bandwidth
+            if [ "$BYTES" -gt 1073741824 ] 2>/dev/null; then
+              BANDWIDTH="$(echo "scale=1; $BYTES/1073741824" | bc)GB"
+            elif [ "$BYTES" -gt 1048576 ] 2>/dev/null; then
+              BANDWIDTH="$(echo "scale=1; $BYTES/1048576" | bc)MB"
+            elif [ "$BYTES" -gt 1024 ] 2>/dev/null; then
+              BANDWIDTH="$(echo "scale=1; $BYTES/1024" | bc)KB"
+            else
+              BANDWIDTH="${BYTES}B"
+            fi
+
+            # Parse top pages
+            TOP_PAGES=$(echo "$RESPONSE" | jq '[.data.viewer.zones[0].httpRequests1d[] | {
+              path: .dimensions.clientRequestURI,
+              count: (.sum.requests | tonumber)
+            }] | sort_by(-.count) | .[:5]')
+
+            # Build analytics object
+            ANALYTICS=$(jq -n \
+              --argjson requests "${REQUESTS:-0}" \
+              --argjson visitors "${VISITORS:-0}" \
+              --argjson pageviews "${PAGEVIEWS:-0}" \
+              --arg bandwidth "$BANDWIDTH" \
+              --argjson topPages "$TOP_PAGES" \
+              '{
+                uniqueVisitors: $visitors,
+                totalRequests: $requests,
+                pageViews: $pageviews,
+                bandwidth: $bandwidth,
+                topPages: $topPages
+              }')
+
+            # Add analytics to project
+            jq --arg key "$KEY" --argjson analytics "$ANALYTICS" \
+              '.projects[$key].analytics = $analytics' \
+              project-data.json > tmp.json && mv tmp.json project-data.json
+
+            echo "  Requests: $REQUESTS, Visitors: $VISITORS, Pages: $PAGEVIEWS, BW: $BANDWIDTH"
+          done
+
+          echo "Generated project-data.json (with analytics):"
           jq '.' project-data.json
 
       - name: Commit updated data

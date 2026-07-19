@@ -107,6 +107,32 @@ function renderCardMetric(id, key, value) {
   if (el) el.textContent = value;
 }
 
+function renderAnalytics(id, analytics) {
+  if (!analytics) return;
+  const set = (elId, val) => {
+    const el = document.getElementById(elId);
+    if (el) el.textContent = val;
+  };
+  set(`${id}-visitors`, formatNumber(analytics.uniqueVisitors || 0));
+  set(`${id}-requests`, formatNumber(analytics.totalRequests || 0));
+  set(`${id}-pageviews`, formatNumber(analytics.pageViews || 0));
+  set(`${id}-bandwidth`, analytics.bandwidth || '—');
+
+  // Top pages
+  const pageList = document.querySelector(`#${id}-top-pages .analytics-page-list`);
+  if (pageList && analytics.topPages && analytics.topPages.length) {
+    pageList.innerHTML = analytics.topPages
+      .map(
+        (p) => `
+      <li class="analytics-page-item">
+        <span class="analytics-page-path">${p.path}</span>
+        <span class="analytics-page-count">${formatNumber(p.count)}</span>
+      </li>`
+      )
+      .join('');
+  }
+}
+
 function renderActivity(commits) {
   const list = document.getElementById('activityList');
   if (!list || !commits.length) return;
@@ -131,7 +157,7 @@ function renderLastUpdated(dateStr) {
 /* ─── SCROLL REVEAL ─── */
 
 function initReveal() {
-  const targets = document.querySelectorAll('.card, .activity');
+  const targets = document.querySelectorAll('.flip-card, .activity');
   if (!targets.length) return;
 
   const observer = new IntersectionObserver(
@@ -249,6 +275,8 @@ async function main() {
       }
       // Latest commit
       renderCardCommit(id, proj.latestCommit);
+      // Cloudflare analytics
+      renderAnalytics(id, proj.analytics);
     });
   }
 
