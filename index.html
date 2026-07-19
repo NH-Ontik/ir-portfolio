@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IR Research Portfolio — NH Ontik</title>
+  <meta name="description" content="A unified dashboard tracking International Relations research projects — timelines, knowledge bases, and conflict visualisations.">
+  <meta name="theme-color" content="#f5f0e8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ─── HERO ─── -->
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">Research Ecosystem</p>
+      <h1 class="hero-title">IR Research<br>Portfolio</h1>
+      <p class="hero-sub">Four projects. One evolving body of work in International Relations — from ancient diplomacy to modern conflict.</p>
+      <div class="hero-meta">
+        <span class="hero-meta-item">
+          <span class="dot dot--live"></span>
+          All sites live
+        </span>
+        <span class="hero-meta-sep">/</span>
+        <span class="hero-meta-item" id="lastUpdated">Updated just now</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ─── AGGREGATE STATS ─── -->
+  <section class="stats-bar" aria-label="Portfolio statistics">
+    <div class="stats-bar-inner">
+      <div class="stat">
+        <span class="stat-value" id="statProjects">4</span>
+        <span class="stat-label">Projects</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="statEvents">—</span>
+        <span class="stat-label">Events tracked</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="statNotes">—</span>
+        <span class="stat-label">Knowledge notes</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="statWords">—</span>
+        <span class="stat-label">Words written</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── BENTO GRID ─── -->
+  <section class="bento" aria-label="Projects">
+    <div class="bento-grid">
+
+      <!-- Knowledge Base — large card -->
+      <article class="card card--large" data-project="knowledge-base">
+        <div class="card-header">
+          <div class="card-status">
+            <span class="dot dot--live"></span>
+            <span class="card-status-text">Live</span>
+          </div>
+          <span class="card-badge">Quartz</span>
+        </div>
+        <h2 class="card-title">IR Knowledge Base</h2>
+        <p class="card-desc">233 interconnected notes covering IR theories, case studies, methodology, and course material. Built on Quartz from an Obsidian vault.</p>
+        <div class="card-metrics">
+          <div class="card-metric">
+            <span class="card-metric-value" id="kb-notes">233</span>
+            <span class="card-metric-label">notes</span>
+          </div>
+          <div class="card-metric">
+            <span class="card-metric-value" id="kb-words">62k</span>
+            <span class="card-metric-label">words</span>
+          </div>
+          <div class="card-metric">
+            <span class="card-metric-value" id="kb-commits">—</span>
+            <span class="card-metric-label">commits</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="card-commit" id="kb-commit">
+            <span class="card-commit-msg">—</span>
+            <span class="card-commit-time">—</span>
+          </div>
+          <div class="card-links">
+            <a href="https://nh-ontik.github.io/international-relations-knowledge-base-by-nh-ontik" class="card-link" target="_blank" rel="noopener">Site</a>
+            <a href="https://github.com/NH-Ontik/international-relations-knowledge-base-by-nh-ontik" class="card-link card-link--repo" target="_blank" rel="noopener">Repo</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- IR History Atlas -->
+      <article class="card" data-project="history-atlas">
+        <div class="card-header">
+          <div class="card-status">
+            <span class="dot dot--live"></span>
+            <span class="card-status-text">Live</span>
+          </div>
+          <span class="card-badge">HTML/JS</span>
+        </div>
+        <h2 class="card-title">IR History Atlas</h2>
+        <p class="card-desc">173 events spanning from the Agricultural Revolution to the present — the definitive IR timeline.</p>
+        <div class="card-metrics">
+          <div class="card-metric">
+            <span class="card-metric-value" id="atlas-events">173</span>
+            <span class="card-metric-label">events</span>
+          </div>
+          <div class="card-metric">
+            <span class="card-metric-value" id="atlas-commits">—</span>
+            <span class="card-metric-label">commits</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="card-commit" id="atlas-commit">
+            <span class="card-commit-msg">—</span>
+            <span class="card-commit-time">—</span>
+          </div>
+          <div class="card-links">
+            <a href="https://nh-ontik.github.io/ir-history-atlas" class="card-link" target="_blank" rel="noopener">Site</a>
+            <a href="https://github.com/NH-Ontik/ir-history-atlas" class="card-link card-link--repo" target="_blank" rel="noopener">Repo</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Ukraine War -->
+      <article class="card" data-project="ukraine-war">
+        <div class="card-header">
+          <div class="card-status">
+            <span class="dot dot--live"></span>
+            <span class="card-status-text">Live</span>
+          </div>
+          <span class="card-badge">HTML/CSS/JS</span>
+        </div>
+        <h2 class="card-title">The Ukraine War</h2>
+        <p class="card-desc">Interactive visualisation of Europe's largest conflict since 1945. Timeline, key players, IR theories, and live duration counter.</p>
+        <div class="card-metrics">
+          <div class="card-metric">
+            <span class="card-metric-value" id="ukraine-events">20</span>
+            <span class="card-metric-label">timeline events</span>
+          </div>
+          <div class="card-metric">
+            <span class="card-metric-value" id="ukraine-commits">—</span>
+            <span class="card-metric-label">commits</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="card-commit" id="ukraine-commit">
+            <span class="card-commit-msg">—</span>
+            <span class="card-commit-time">—</span>
+          </div>
+          <div class="card-links">
+            <a href="https://nh-ontik.github.io/ukraine-war" class="card-link" target="_blank" rel="noopener">Site</a>
+            <a href="https://github.com/NH-Ontik/ukraine-war" class="card-link card-link--repo" target="_blank" rel="noopener">Repo</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Cuban Missile Crisis -->
+      <article class="card" data-project="cuban-missile">
+        <div class="card-header">
+          <div class="card-status">
+            <span class="dot dot--live"></span>
+            <span class="card-status-text">Live</span>
+          </div>
+          <span class="card-badge">HTML/CSS/JS</span>
+        </div>
+        <h2 class="card-title">Cuban Missile Crisis</h2>
+        <p class="card-desc">13 days that stopped the world. Interactive narrative of the closest the Cold War came to nuclear war.</p>
+        <div class="card-metrics">
+          <div class="card-metric">
+            <span class="card-metric-value" id="cmc-days">13</span>
+            <span class="card-metric-label">days covered</span>
+          </div>
+          <div class="card-metric">
+            <span class="card-metric-value" id="cmc-commits">—</span>
+            <span class="card-metric-label">commits</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="card-commit" id="cmc-commit">
+            <span class="card-commit-msg">—</span>
+            <span class="card-commit-time">—</span>
+          </div>
+          <div class="card-links">
+            <a href="https://nh-ontik.github.io/cuban-missile-crisis" class="card-link" target="_blank" rel="noopener">Site</a>
+            <a href="https://github.com/NH-Ontik/cuban-missile-crisis" class="card-link card-link--repo" target="_blank" rel="noopener">Repo</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Activity Feed -->
+      <aside class="activity" aria-label="Recent activity">
+        <h3 class="activity-title">Recent Activity</h3>
+        <ul class="activity-list" id="activityList">
+          <li class="activity-empty">Loading activity from GitHub...</li>
+        </ul>
+      </aside>
+
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <span class="footer-text">NH Ontik — International Relations Research</span>
+      <span class="footer-sep">/</span>
+      <a href="https://github.com/NH-Ontik" class="footer-link" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

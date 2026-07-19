@@ -1,0 +1,133 @@
+name: Sync Project Metrics
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'   # Every 6 hours
+  repository_dispatch:
+    types: [repo-updated]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch repo data and build project-data.json
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          REPOS=(
+            "NH-Ontik/international-relations-knowledge-base-by-nh-ontik"
+            "NH-Ontik/ir-history-atlas"
+            "NH-Ontik/ukraine-war"
+            "NH-Ontik/cuban-missile-crisis"
+          )
+          LABELS=(
+            "IR Knowledge Base"
+            "IR History Atlas"
+            "The Ukraine War"
+            "Cuban Missile Crisis"
+          )
+          STATIC_NOTES=233
+          STATIC_WORDS="62k"
+          STATIC_EVENTS_1=173
+          STATIC_EVENTS_2=20
+          STATIC_DAYS=13
+
+          # Start JSON
+          echo '{ "projects": {}, "activity": [], "totals": {}, "fetchedAt": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'" }' > project-data.json
+
+          # Fetch each repo
+          for i in "${!REPOS[@]}"; do
+            FULL="${REPOS[$i]}"
+            LABEL="${LABELS[$i]}"
+            OWNER="${FULL%/*}"
+            REPO="${FULL#*/}"
+
+            echo "Fetching $FULL..."
+
+            # Repo metadata
+            META=$(gh api "repos/$FULL" --jq '{
+              stars: .stargazers_count,
+              forks: .forks_count,
+              openIssues: .open_issues_count,
+              defaultBranch: .default_branch,
+              pushedAt: .pushed_at,
+              description: .description
+            }' 2>/dev/null || echo '{}')
+
+            # Recent commits (top 5)
+            COMMITS=$(gh api "repos/$FULL/commits?per_page=5" --jq '[.[] | {
+              message: .commit.message,
+              date: .commit.author.date,
+              sha: .sha[0:7],
+              author: .commit.author.name
+            }]' 2>/dev/null || echo '[]')
+
+            # Extract latest commit (null if empty)
+            LATEST=$(echo "$COMMITS" | jq '.[0] // null' 2>/dev/null || echo 'null')
+
+            # Commit count (number of recent commits fetched)
+            COMMIT_COUNT=$(echo "$COMMITS" | jq 'length' 2>/dev/null || echo "0")
+
+            # Build project entry
+            ENTRY=$(jq -n \
+              --argjson meta "$META" \
+              --argjson commits "$COMMITS" \
+              --argjson latest "$LATEST" \
+              --argjson commitCount "${COMMIT_COUNT:-0}" \
+              --arg label "$LABEL" \
+              '{
+                label: $label,
+                meta: $meta,
+                latestCommit: $latest,
+                commitCount: $commitCount,
+                recentCommits: $commits
+              }')
+
+            # Determine key based on repo name
+            case "$REPO" in
+              international-relations-knowledge-base-by-nh-ontik) KEY="knowledge-base" ;;
+              ir-history-atlas) KEY="history-atlas" ;;
+              ukraine-war) KEY="ukraine-war" ;;
+              cuban-missile-crisis) KEY="cuban-missile" ;;
+            esac
+
+            # Add to JSON
+            jq --arg key "$KEY" --argjson entry "$ENTRY" '.projects[$key] = $entry' project-data.json > tmp.json && mv tmp.json project-data.json
+
+            # Collect activity
+            echo "$COMMITS" | jq -c --arg repo "$LABEL" '.[] | {repo: $repo, message: .message, date: .date, sha: .sha}' >> /tmp/activity.jsonl
+          done
+
+          # Merge activity (deduplicate by sha), sort by date, take top 10
+          if [ -f /tmp/activity.jsonl ]; then
+            jq -s 'sort_by(.date) | reverse | unique_by(.sha) | .[:10]' /tmp/activity.jsonl > /tmp/activity_sorted.json
+            jq --slurpfile activity /tmp/activity_sorted.json '.activity = $activity[0]' project-data.json > tmp.json && mv tmp.json project-data.json
+          fi
+
+          # Set totals
+          jq --arg events "$((STATIC_EVENTS_1 + STATIC_EVENTS_2))" \
+             --arg notes "$STATIC_NOTES" \
+             --arg words "$STATIC_WORDS" \
+             '.totals = {events: ($events | tonumber), notes: ($notes | tonumber), words: $words}' \
+             project-data.json > tmp.json && mv tmp.json project-data.json
+
+          echo "Generated project-data.json:"
+          jq '.' project-data.json
+
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add project-data.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: sync project metrics [skip ci]"
+            git push
+          fi
