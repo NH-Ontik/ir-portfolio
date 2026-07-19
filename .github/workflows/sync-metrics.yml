@@ -154,19 +154,19 @@ jobs:
               continue
             fi
 
-            echo "Fetching Cloudflare analytics for $KEY (zone: $ZONE_ID)..."
+            echo "Fetching Cloudflare Web Analytics for $KEY (zone: $ZONE_ID)..."
 
-            # GraphQL query: summary stats only (httpRequests1d not available for all zone types)
+            # GraphQL query using RUM Web Analytics dataset (works without proxy)
             QUERY=$(cat <<EOF
           {
             viewer {
               zones(filter: {zoneTag: "$ZONE_ID"}) {
-                httpRequests1dGroups(
+                rumPageloadEventsAdaptiveGroups(
                   limit: 1,
                   filter: {date_geq: "$DATE_SINCE", date_leq: "$DATE_UNTIL"}
                 ) {
                   sum {
-                    requests
+                    visits
                     pageViews
                     bytes
                   }
@@ -182,6 +182,10 @@ jobs:
             -H "Content-Type: application/json" \
             -d "$(jq -n --arg q "$QUERY" '{"query": $q}')")
 
+          # Debug: show raw response
+          echo "Raw response for $KEY:"
+          echo "$RESPONSE" | jq '.' 2>/dev/null || echo "$RESPONSE"
+
           # Check for API errors
           API_ERRORS=$(echo "$RESPONSE" | jq -r '.errors // empty')
           if [ -n "$API_ERRORS" ]; then
@@ -189,12 +193,10 @@ jobs:
             continue
           fi
 
-          # Parse summary (handle missing data gracefully)
-          REQUESTS=$(echo "$RESPONSE" | jq -r '.data.viewer.zones[0].httpRequests1dGroups[0].sum.requests // 0' 2>/dev/null || echo "0")
-          # Note: unique visitors not available in httpRequests1dGroups GraphQL API
-          VISITORS=0
-          PAGEVIEWS=$(echo "$RESPONSE" | jq -r '.data.viewer.zones[0].httpRequests1dGroups[0].sum.pageViews // 0' 2>/dev/null || echo "0")
-          BYTES=$(echo "$RESPONSE" | jq -r '.data.viewer.zones[0].httpRequests1dGroups[0].sum.bytes // 0' 2>/dev/null || echo "0")
+          # Parse RUM Web Analytics data
+          VISITS=$(echo "$RESPONSE" | jq -r '.data.viewer.zones[0].rumPageloadEventsAdaptiveGroups[0].sum.visits // 0' 2>/dev/null || echo "0")
+          PAGEVIEWS=$(echo "$RESPONSE" | jq -r '.data.viewer.zones[0].rumPageloadEventsAdaptiveGroups[0].sum.pageViews // 0' 2>/dev/null || echo "0")
+          BYTES=$(echo "$RESPONSE" | jq -r '.data.viewer.zones[0].rumPageloadEventsAdaptiveGroups[0].sum.bytes // 0' 2>/dev/null || echo "0")
 
           # Format bandwidth
           if [ "$BYTES" -gt 1073741824 ] 2>/dev/null; then
@@ -212,17 +214,15 @@ jobs:
 
           # Build analytics object
           ANALYTICS=$(jq -n \
-            --argjson requests "${REQUESTS:-0}" \
-            --argjson visitors "${VISITORS:-0}" \
+            --argjson visits "${VISITS:-0}" \
             --argjson pageviews "${PAGEVIEWS:-0}" \
             --arg bandwidth "$BANDWIDTH" \
-            --argjson topPages "$TOP_PAGES" \
             '{
-              uniqueVisitors: $visitors,
-              totalRequests: $requests,
+              uniqueVisitors: $visits,
+              totalRequests: $pageviews,
               pageViews: $pageviews,
               bandwidth: $bandwidth,
-              topPages: $topPages
+              topPages: []
             }')
 
           # Add analytics to project
@@ -230,7 +230,7 @@ jobs:
             '.projects[$key].analytics = $analytics' \
             project-data.json > tmp.json && mv tmp.json project-data.json
 
-          echo "  Requests: $REQUESTS, Visitors: $VISITORS, Pages: $PAGEVIEWS, BW: $BANDWIDTH"
+          echo "  Visits: $VISITS, Pages: $PAGEVIEWS, BW: $BANDWIDTH"
           done
 
           echo "Generated project-data.json (with analytics):"
