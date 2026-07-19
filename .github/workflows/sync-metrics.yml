@@ -130,107 +130,59 @@ jobs:
           echo "Generated project-data.json (pre-analytics):"
           jq '.' project-data.json
 
-      - name: Fetch Cloudflare analytics
-        if: env.CFLARE_API_TOKEN != ''
-        env:
-          CFLARE_API_TOKEN: ${{ secrets.CFLARE_API_TOKEN }}
+      - name: Fetch GitHub traffic analytics
         run: |
-          ZONE_KEYS=("knowledge-base" "history-atlas" "ukraine-war" "cuban-missile")
-          ZONE_IDS=(
-            "${{ secrets.CFLARE_ZONE_KB }}"
-            "${{ secrets.CFLARE_ZONE_ATLAS }}"
-            "${{ secrets.CFLARE_ZONE_UKRAINE }}"
-            "${{ secrets.CFLARE_ZONE_CUBA }}"
-          )
-          DATE_UNTIL=$(date -u +%Y-%m-%d)
-          DATE_SINCE=$(date -u -d '7 days ago' +%Y-%m-%d 2>/dev/null || date -u -v-7d +%Y-%m-%d)
+          # GitHub Traffic API — views, unique visitors, popular paths
+          REPOS=("NH-Ontik/international-relations-knowledge-base-by-nh-ontik" "NH-Ontik/ir-history-atlas" "NH-Ontik/ukraine-war" "NH-Ontik/cuban-missile-crisis")
+          REPO_KEYS=("knowledge-base" "history-atlas" "ukraine-war" "cuban-missile")
 
-          for i in "${!ZONE_KEYS[@]}"; do
-            KEY="${ZONE_KEYS[$i]}"
-            ZONE_ID="${ZONE_IDS[$i]}"
+          for i in "${!REPOS[@]}"; do
+            REPO="${REPOS[$i]}"
+            KEY="${REPO_KEYS[$i]}"
 
-            if [ -z "$ZONE_ID" ]; then
-              echo "No zone ID for $KEY, skipping"
+            echo "Fetching GitHub traffic for $KEY ($REPO)..."
+
+            # Fetch views (last 14 days — GitHub API limit)
+            VIEWS_RESP=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github.v3+json" \
+              "https://api.github.com/repos/$REPO/traffic/views?per_day=true")
+
+            # Check for errors
+            ERROR_MSG=$(echo "$VIEWS_RESP" | jq -r '.message // empty' 2>/dev/null)
+            if [ -n "$ERROR_MSG" ]; then
+              echo "  Error: $ERROR_MSG (need push access)"
               continue
             fi
 
-            echo "Fetching Cloudflare Web Analytics for $KEY (zone: $ZONE_ID)..."
+            # Fetch popular paths
+            PAGES_RESP=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github.v3+json" \
+              "https://api.github.com/repos/$REPO/traffic/popular/paths")
 
-            # GraphQL query using RUM Web Analytics dataset (works without proxy)
-            QUERY=$(cat <<EOF
-          {
-            viewer {
-              zones(filter: {zoneTag: "$ZONE_ID"}) {
-                rumPageloadEventsAdaptiveGroups(
-                  limit: 1,
-                  filter: {date_geq: "$DATE_SINCE", date_leq: "$DATE_UNTIL"}
-                ) {
-                  sum {
-                    visits
-                    pageViews
-                    bytes
-                  }
-                }
-              }
-            }
-          }
-          EOF
-          )
+            # Parse views
+            TOTAL_VIEWS=$(echo "$VIEWS_RESP" | jq -r '.count // 0' 2>/dev/null || echo "0")
+            UNIQUE_VISITORS=$(echo "$VIEWS_RESP" | jq -r '.uniques // 0' 2>/dev/null || echo "0")
 
-          RESPONSE=$(curl -s -X POST "https://api.cloudflare.com/client/v4/graphql" \
-            -H "Authorization: Bearer $CFLARE_API_TOKEN" \
-            -H "Content-Type: application/json" \
-            -d "$(jq -n --arg q "$QUERY" '{"query": $q}')")
+            # Parse top pages (limit to 3)
+            TOP_PAGES=$(echo "$PAGES_RESP" | jq '[.[] | {path: .path, title: .title, count: .count}] | .[:3]' 2>/dev/null || echo "[]")
 
-          # Debug: show raw response
-          echo "Raw response for $KEY:"
-          echo "$RESPONSE" | jq '.' 2>/dev/null || echo "$RESPONSE"
+            echo "  Views: $TOTAL_VIEWS, Unique visitors: $UNIQUE_VISITORS"
 
-          # Check for API errors
-          API_ERRORS=$(echo "$RESPONSE" | jq -r '.errors // empty')
-          if [ -n "$API_ERRORS" ]; then
-            echo "Cloudflare API errors for $KEY: $API_ERRORS"
-            continue
-          fi
+            # Build analytics object
+            ANALYTICS=$(jq -n \
+              --argjson visitors "${UNIQUE_VISITORS:-0}" \
+              --argjson views "${TOTAL_VIEWS:-0}" \
+              --argjson pages "$TOP_PAGES" \
+              '{
+                uniqueVisitors: $visitors,
+                pageViews: $views,
+                topPages: $pages
+              }')
 
-          # Parse RUM Web Analytics data
-          VISITS=$(echo "$RESPONSE" | jq -r '.data.viewer.zones[0].rumPageloadEventsAdaptiveGroups[0].sum.visits // 0' 2>/dev/null || echo "0")
-          PAGEVIEWS=$(echo "$RESPONSE" | jq -r '.data.viewer.zones[0].rumPageloadEventsAdaptiveGroups[0].sum.pageViews // 0' 2>/dev/null || echo "0")
-          BYTES=$(echo "$RESPONSE" | jq -r '.data.viewer.zones[0].rumPageloadEventsAdaptiveGroups[0].sum.bytes // 0' 2>/dev/null || echo "0")
-
-          # Format bandwidth
-          if [ "$BYTES" -gt 1073741824 ] 2>/dev/null; then
-            BANDWIDTH="$(echo "scale=1; $BYTES/1073741824" | bc)GB"
-          elif [ "$BYTES" -gt 1048576 ] 2>/dev/null; then
-            BANDWIDTH="$(echo "scale=1; $BYTES/1048576" | bc)MB"
-          elif [ "$BYTES" -gt 1024 ] 2>/dev/null; then
-            BANDWIDTH="$(echo "scale=1; $BYTES/1024" | bc)KB"
-          else
-            BANDWIDTH="${BYTES}B"
-          fi
-
-          # Top pages not available in httpRequests1dGroups (use empty array)
-          TOP_PAGES='[]'
-
-          # Build analytics object
-          ANALYTICS=$(jq -n \
-            --argjson visits "${VISITS:-0}" \
-            --argjson pageviews "${PAGEVIEWS:-0}" \
-            --arg bandwidth "$BANDWIDTH" \
-            '{
-              uniqueVisitors: $visits,
-              totalRequests: $pageviews,
-              pageViews: $pageviews,
-              bandwidth: $bandwidth,
-              topPages: []
-            }')
-
-          # Add analytics to project
-          jq --arg key "$KEY" --argjson analytics "$ANALYTICS" \
-            '.projects[$key].analytics = $analytics' \
-            project-data.json > tmp.json && mv tmp.json project-data.json
-
-          echo "  Visits: $VISITS, Pages: $PAGEVIEWS, BW: $BANDWIDTH"
+            # Add analytics to project
+            jq --arg key "$KEY" --argjson analytics "$ANALYTICS" \
+              '.projects[$key].analytics = $analytics' \
+              project-data.json > tmp.json && mv tmp.json project-data.json
           done
 
           echo "Generated project-data.json (with analytics):"

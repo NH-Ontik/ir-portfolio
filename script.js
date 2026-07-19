@@ -114,9 +114,7 @@ function renderAnalytics(id, analytics) {
     if (el) el.textContent = val;
   };
   set(`${id}-visitors`, formatNumber(analytics.uniqueVisitors || 0));
-  set(`${id}-requests`, formatNumber(analytics.totalRequests || 0));
   set(`${id}-pageviews`, formatNumber(analytics.pageViews || 0));
-  set(`${id}-bandwidth`, analytics.bandwidth || '—');
 
   // Top pages
   const pageList = document.querySelector(`#${id}-top-pages .analytics-page-list`);
@@ -125,7 +123,7 @@ function renderAnalytics(id, analytics) {
       .map(
         (p) => `
       <li class="analytics-page-item">
-        <span class="analytics-page-path">${p.path}</span>
+        <span class="analytics-page-path">${p.title || p.path}</span>
         <span class="analytics-page-count">${formatNumber(p.count)}</span>
       </li>`
       )
