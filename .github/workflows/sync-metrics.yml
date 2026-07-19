@@ -156,7 +156,7 @@ jobs:
 
             echo "Fetching Cloudflare analytics for $KEY (zone: $ZONE_ID)..."
 
-            # GraphQL query: summary stats + top pages
+            # GraphQL query: summary stats only (httpRequests1d not available for all zone types)
             QUERY=$(cat <<EOF
           {
             viewer {
@@ -169,18 +169,6 @@ jobs:
                     requests
                     pageViews
                     bytes
-                  }
-                }
-                httpRequests1d(
-                  limit: 5,
-                  filter: {date_geq: "$DATE_SINCE", date_leq: "$DATE_UNTIL"},
-                  orderBy: [requests_DESC]
-                ) {
-                  dimensions {
-                    clientRequestURI
-                  }
-                  sum {
-                    requests
                   }
                 }
               }
@@ -219,11 +207,8 @@ jobs:
             BANDWIDTH="${BYTES}B"
           fi
 
-          # Parse top pages (handle missing/empty data)
-          TOP_PAGES=$(echo "$RESPONSE" | jq '[.data.viewer.zones[0].httpRequests1d[]? | {
-            path: .dimensions.clientRequestURI,
-            count: (.sum.requests | tonumber)
-          }] | sort_by(-.count) | .[:5]' 2>/dev/null || echo '[]')
+          # Top pages not available in httpRequests1dGroups (use empty array)
+          TOP_PAGES='[]'
 
           # Build analytics object
           ANALYTICS=$(jq -n \
