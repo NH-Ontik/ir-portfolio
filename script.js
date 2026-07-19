@@ -131,6 +131,7 @@ function renderLastUpdated(dateStr) {
 /* ─── MAIN ─── */
 
 async function main() {
+  const loader = document.getElementById('loader');
   let data = null;
 
   // 1. Try loading pre-built project-data.json (from GitHub Action)
@@ -237,6 +238,9 @@ async function main() {
   if (data.activity && data.activity.length > 0) {
     renderLastUpdated(data.activity[0].date);
   }
+
+  // Hide loader
+  if (loader) loader.classList.add('hidden');
 }
 
 document.addEventListener('DOMContentLoaded', main);

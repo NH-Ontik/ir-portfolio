@@ -26,6 +26,98 @@
   --ease-out:  cubic-bezier(.22, 1, .36, 1);
 }
 
+/* ─── LOADER ─── */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg);
+  transition: opacity 0.4s var(--ease);
+}
+.loader.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.spinner-container {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+.spinner-inner {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  box-shadow: 10px 10px 20px 0px rgba(44, 36, 24, .12), -10px -10px 20px 0px rgba(255, 255, 255, .6);
+}
+.spinner-outer {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: -10px -10px 20px 0px rgba(255, 255, 255, .6), 10px 10px 20px 0px rgba(44, 36, 24, .12);
+  animation: spinner-rotate 2s ease infinite;
+}
+.spinner-inner-1 {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  box-shadow: 10px 10px 20px 0px rgba(44, 36, 24, .12), -10px -10px 20px 0px rgba(255, 255, 255, .6);
+  z-index: 10;
+  animation: spinner-rotate 2s ease infinite;
+}
+.spinner-inner-2 {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  box-shadow: 10px 10px 20px 0px rgba(44, 36, 24, .12), -10px -10px 20px 0px rgba(255, 255, 255, .6);
+  z-index: 10;
+  animation: spinner-rotate 2s ease infinite;
+}
+.spinner-inner-3 {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  box-shadow: 10px 10px 20px 0px rgba(44, 36, 24, .12), -10px -10px 20px 0px rgba(255, 255, 255, .6);
+  z-index: 10;
+  animation: spinner-rotate 2s ease infinite;
+}
+.spinner-inner-4 {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  box-shadow: 10px 10px 20px 0px rgba(44, 36, 24, .12), -10px -10px 20px 0px rgba(255, 255, 255, .6);
+  z-index: 10;
+  animation: spinner-rotate 2s ease infinite;
+}
+@keyframes spinner-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 /* ─── RESET ─── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
