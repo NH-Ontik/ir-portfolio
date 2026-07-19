@@ -152,18 +152,117 @@ img { display: block; max-width: 100%; }
   border-radius: 12px;
 }
 
-/* ═══ CARDS ═══ */
-.card {
-  background: var(--surface);
+/* ═══ 3D CARDS ═══ */
+.card-parent {
+  perspective: 1000px;
+  position: relative;
+}
+.card-parent--large {
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
+}
+.card-3d {
+  position: relative;
+  border-radius: 20px;
+  background: linear-gradient(135deg, var(--surface) 0%, var(--bg-alt) 100%);
   padding: clamp(1.5rem, 3vw, 2.25rem);
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  transition: background 0.4s var(--ease);
-  position: relative;
   height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+  box-shadow: var(--shadow) 0 8px 25px -8px, var(--shadow-2) 0 15px 25px -5px;
+  overflow: hidden;
+}
+.card-parent:hover .card-3d {
+  transform: rotate3d(1, 1, 0, 8deg);
+  box-shadow: var(--shadow-2) 20px 40px 25px -20px, rgba(44, 36, 24, .08) 0 25px 30px 0;
 }
 
+/* Glass overlay */
+.card-glass {
+  transform-style: preserve-3d;
+  position: absolute;
+  inset: 8px;
+  border-radius: 22px;
+  border-top-right-radius: 100%;
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.65) 100%);
+  transform: translate3d(0px, 0px, 15px);
+  border-left: 1px solid rgba(255, 255, 255, 0.5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+  z-index: 0;
+  transition: transform 0.5s var(--ease);
+}
+
+/* Decorative circles — top-right */
+.card-logo {
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform-style: preserve-3d;
+  z-index: 1;
+}
+.circle {
+  display: block;
+  position: absolute;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  top: 0;
+  right: 0;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  background: rgba(122, 88, 40, 0.08);
+  box-shadow: rgba(100, 100, 111, 0.1) -6px 6px 16px 0;
+  transition: transform 0.5s var(--ease);
+}
+.circle1 { width: 170px; transform: translate3d(0, 0, 10px); top: 8px; right: 8px; }
+.circle2 { width: 140px; transform: translate3d(0, 0, 20px); top: 10px; right: 10px; transition-delay: 0.4s; }
+.circle3 { width: 110px; transform: translate3d(0, 0, 30px); top: 17px; right: 17px; transition-delay: 0.8s; }
+.circle4 { width: 80px; transform: translate3d(0, 0, 40px); top: 23px; right: 23px; transition-delay: 1.2s; }
+.circle5 {
+  width: 50px;
+  transform: translate3d(0, 0, 50px);
+  top: 30px;
+  right: 30px;
+  display: grid;
+  place-content: center;
+  transition-delay: 1.6s;
+}
+.circle-icon {
+  width: 20px;
+  color: var(--accent);
+}
+.card-parent:hover .circle2 { transform: translate3d(0, 0, 40px); }
+.card-parent:hover .circle3 { transform: translate3d(0, 0, 60px); }
+.card-parent:hover .circle4 { transform: translate3d(0, 0, 80px); }
+.card-parent:hover .circle5 { transform: translate3d(0, 0, 100px); }
+
+/* Card content */
+.card-content {
+  transform: translate3d(0, 0, 16px);
+  position: relative;
+  z-index: 2;
+  flex: 1;
+}
+.card-bottom {
+  transform-style: preserve-3d;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+  transform: translate3d(0, 0, 16px);
+}
+.card-parent:hover .card-bottom {
+  transform: translate3d(0, 0, 30px);
+}
+
+/* Card header */
 .card-header {
   display: flex;
   align-items: center;
@@ -244,16 +343,6 @@ img { display: block; max-width: 100%; }
   color: var(--text-3);
 }
 
-/* Card footer */
-.card-footer {
-  margin-top: auto;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--border);
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 1rem;
-}
 .card-commit {
   display: flex;
   flex-direction: column;
@@ -403,7 +492,7 @@ img { display: block; max-width: 100%; }
   .stats-bar-inner {
     grid-template-columns: 1fr 1fr;
   }
-  .card-footer {
+  .card-bottom {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.75rem;
