@@ -107,30 +107,6 @@ function renderCardMetric(id, key, value) {
   if (el) el.textContent = value;
 }
 
-function renderAnalytics(id, analytics) {
-  if (!analytics) return;
-  const set = (elId, val) => {
-    const el = document.getElementById(elId);
-    if (el) el.textContent = val;
-  };
-  set(`${id}-visitors`, formatNumber(analytics.uniqueVisitors || 0));
-  set(`${id}-pageviews`, formatNumber(analytics.pageViews || 0));
-
-  // Top pages
-  const pageList = document.querySelector(`#${id}-top-pages .analytics-page-list`);
-  if (pageList && analytics.topPages && analytics.topPages.length) {
-    pageList.innerHTML = analytics.topPages
-      .map(
-        (p) => `
-      <li class="analytics-page-item">
-        <span class="analytics-page-path">${p.title || p.path}</span>
-        <span class="analytics-page-count">${formatNumber(p.count)}</span>
-      </li>`
-      )
-      .join('');
-  }
-}
-
 function renderActivity(commits) {
   const list = document.getElementById('activityList');
   if (!list || !commits.length) return;
@@ -150,46 +126,6 @@ function renderActivity(commits) {
 function renderLastUpdated(dateStr) {
   const el = document.getElementById('lastUpdated');
   if (el && dateStr) el.textContent = `Updated ${timeAgo(dateStr)}`;
-}
-
-/* ─── SCROLL REVEAL ─── */
-
-function initReveal() {
-  const targets = document.querySelectorAll('.flip-card, .activity');
-  if (!targets.length) return;
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('revealed');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-  );
-
-  targets.forEach((el) => observer.observe(el));
-}
-
-/* ─── FLIP CARD CLICK ─── */
-
-function initFlipCards() {
-  document.querySelectorAll('.flip-card').forEach((card) => {
-    card.addEventListener('click', (e) => {
-      if (e.target.closest('a')) return;
-      card.classList.toggle('flipped');
-      card.setAttribute('aria-expanded', card.classList.contains('flipped'));
-    });
-    card.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        card.classList.toggle('flipped');
-        card.setAttribute('aria-expanded', card.classList.contains('flipped'));
-      }
-    });
-  });
 }
 
 /* ─── MAIN ─── */
@@ -292,8 +228,6 @@ async function main() {
       }
       // Latest commit
       renderCardCommit(id, proj.latestCommit);
-      // Cloudflare analytics
-      renderAnalytics(id, proj.analytics);
     });
   }
 
@@ -303,10 +237,6 @@ async function main() {
   if (data.activity && data.activity.length > 0) {
     renderLastUpdated(data.activity[0].date);
   }
-
-  // 4. Initialize interactions
-  initReveal();
-  initFlipCards();
 }
 
 document.addEventListener('DOMContentLoaded', main);
