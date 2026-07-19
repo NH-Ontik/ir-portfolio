@@ -1,0 +1,242 @@
+{
+  "projects": {
+    "knowledge-base": {
+      "label": "IR Knowledge Base",
+      "meta": {
+        "defaultBranch": "main",
+        "description": null,
+        "forks": 0,
+        "openIssues": 0,
+        "pushedAt": "2026-07-19T09:54:17Z",
+        "stars": 0
+      },
+      "latestCommit": {
+        "author": "NH-Ontik",
+        "date": "2026-07-19T09:54:15Z",
+        "message": "Update Quartz config: footer links, rag metadata display\n\n- Update footer GitHub link to point to KB repo instead of jackyzha0/quartz\n- Add Quartz credit link\n- Add rag to note-properties includedProperties for RAG metadata visibility",
+        "sha": "3114624"
+      },
+      "commitCount": 5,
+      "recentCommits": [
+        {
+          "author": "NH-Ontik",
+          "date": "2026-07-19T09:54:15Z",
+          "message": "Update Quartz config: footer links, rag metadata display\n\n- Update footer GitHub link to point to KB repo instead of jackyzha0/quartz\n- Add Quartz credit link\n- Add rag to note-properties includedProperties for RAG metadata visibility",
+          "sha": "3114624"
+        },
+        {
+          "author": "NH-Ontik",
+          "date": "2026-07-19T09:49:08Z",
+          "message": "Restructure sources: remove PDFs, add hyperlinked academic references\n\n- Remove 6 local PDFs from 5_Sources/\n- Add 4 comprehensive hyperlinked source hub files:\n  - Comprehensive Sources Hub (master index with DOIs, JSTOR, publisher links)\n  - Journals and Databases (18 journals, 14 datasets, 10 OA repositories)\n  - Institutions and Think Tanks (55+ institutions across 6 regions)\n  - Policy Documents and Primary Sources (UN, EU, NATO, ASEAN treaties)\n- Update Reading List with hyperlinked references\n- Update Realism and Constructivism theory notes with hyperlinked sources\n- Update Dashboard to reference hyperlinked sources instead of PDFs\n- Update index.md directory tree and navigation (11 sections)\n- Update _CLAUDE.md vault structure\n- Update daily note to reflect sources restructuring",
+          "sha": "b77b16b"
+        },
+        {
+          "author": "NH-Ontik",
+          "date": "2026-07-18T10:11:03Z",
+          "message": "Added cloudflare analytics",
+          "sha": "f6ecfac"
+        },
+        {
+          "author": "NH-Ontik",
+          "date": "2026-07-18T10:10:52Z",
+          "message": "Added cloudflare analytics",
+          "sha": "9711a15"
+        },
+        {
+          "author": "NH-Ontik",
+          "date": "2026-07-14T17:13:41Z",
+          "message": "Update Quartz engine to latest v5 branch",
+          "sha": "ccc7358"
+        }
+      ]
+    },
+    "history-atlas": {
+      "label": "IR History Atlas",
+      "meta": {
+        "defaultBranch": "main",
+        "description": null,
+        "forks": 0,
+        "openIssues": 0,
+        "pushedAt": "2026-07-18T21:32:56Z",
+        "stars": 0
+      },
+      "latestCommit": {
+        "author": "NH-Ontik",
+        "date": "2026-07-18T21:32:54Z",
+        "message": "Add GitHub Actions workflow for Pages deployment",
+        "sha": "756e5e3"
+      },
+      "commitCount": 2,
+      "recentCommits": [
+        {
+          "author": "NH-Ontik",
+          "date": "2026-07-18T21:32:54Z",
+          "message": "Add GitHub Actions workflow for Pages deployment",
+          "sha": "756e5e3"
+        },
+        {
+          "author": "NH-Ontik",
+          "date": "2026-07-18T21:31:41Z",
+          "message": "IR History Atlas — 173-event interactive timeline with YouTube explainer links",
+          "sha": "07b02bd"
+        }
+      ]
+    },
+    "ukraine-war": {
+      "label": "The Ukraine War",
+      "meta": {
+        "defaultBranch": "master",
+        "description": null,
+        "forks": 0,
+        "openIssues": 0,
+        "pushedAt": "2026-07-18T17:13:49Z",
+        "stars": 0
+      },
+      "latestCommit": {
+        "author": "NH-Ontik",
+        "date": "2026-07-18T17:13:47Z",
+        "message": "Fix CSS specificity bug: span:last-child was overriding hero-dur-num font-size, keeping numbers at .75rem. Wrap unit labels in explicit class.",
+        "sha": "5ac1a98"
+      },
+      "commitCount": 5,
+      "recentCommits": [
+        {
+          "author": "NH-Ontik",
+          "date": "2026-07-18T17:13:47Z",
+          "message": "Fix CSS specificity bug: span:last-child was overriding hero-dur-num font-size, keeping numbers at .75rem. Wrap unit labels in explicit class.",
+          "sha": "5ac1a98"
+        },
+        {
+          "author": "NH-Ontik",
+          "date": "2026-07-18T17:11:07Z",
+          "message": "Make duration numbers significantly bigger (4-6.5rem)",
+          "sha": "2708e34"
+        },
+        {
+          "author": "NH-Ontik",
+          "date": "2026-07-18T17:08:51Z",
+          "message": "Enlarge hero duration counter with glass container, bigger numbers",
+          "sha": "1734fa0"
+        },
+        {
+          "author": "NH-Ontik",
+          "date": "2026-07-18T17:05:45Z",
+          "message": "Move live duration counter to hero with seconds, keep stats in By the Numbers",
+          "sha": "0c93a4f"
+        },
+        {
+          "author": "NH-Ontik",
+          "date": "2026-07-18T17:03:08Z",
+          "message": "Replace stats section with live war duration countdown + key stats",
+          "sha": "4b2f71e"
+        }
+      ]
+    },
+    "cuban-missile": {
+      "label": "Cuban Missile Crisis",
+      "meta": {
+        "defaultBranch": "main",
+        "description": null,
+        "forks": 0,
+        "openIssues": 0,
+        "pushedAt": "2026-07-19T11:29:52Z",
+        "stars": 0
+      },
+      "latestCommit": {
+        "author": "NH-Ontik",
+        "date": "2026-07-19T11:29:50Z",
+        "message": "Add GitHub Pages deploy workflow",
+        "sha": "852f814"
+      },
+      "commitCount": 3,
+      "recentCommits": [
+        {
+          "author": "NH-Ontik",
+          "date": "2026-07-19T11:29:50Z",
+          "message": "Add GitHub Pages deploy workflow",
+          "sha": "852f814"
+        },
+        {
+          "author": "NH-Ontik",
+          "date": "2026-07-15T13:14:09Z",
+          "message": "Add Cloudflare Web Analytics",
+          "sha": "d1312dd"
+        },
+        {
+          "author": "NH-Ontik",
+          "date": "2026-07-15T12:37:20Z",
+          "message": "Initial commit: Cuban Missile Crisis interactive narrative",
+          "sha": "512061a"
+        }
+      ]
+    }
+  },
+  "activity": [
+    {
+      "repo": "IR History Atlas",
+      "message": "IR History Atlas — 173-event interactive timeline with YouTube explainer links",
+      "date": "2026-07-18T21:31:41Z",
+      "sha": "07b02bd"
+    },
+    {
+      "repo": "The Ukraine War",
+      "message": "Move live duration counter to hero with seconds, keep stats in By the Numbers",
+      "date": "2026-07-18T17:05:45Z",
+      "sha": "0c93a4f"
+    },
+    {
+      "repo": "The Ukraine War",
+      "message": "Enlarge hero duration counter with glass container, bigger numbers",
+      "date": "2026-07-18T17:08:51Z",
+      "sha": "1734fa0"
+    },
+    {
+      "repo": "The Ukraine War",
+      "message": "Make duration numbers significantly bigger (4-6.5rem)",
+      "date": "2026-07-18T17:11:07Z",
+      "sha": "2708e34"
+    },
+    {
+      "repo": "IR Knowledge Base",
+      "message": "Update Quartz config: footer links, rag metadata display\n\n- Update footer GitHub link to point to KB repo instead of jackyzha0/quartz\n- Add Quartz credit link\n- Add rag to note-properties includedProperties for RAG metadata visibility",
+      "date": "2026-07-19T09:54:15Z",
+      "sha": "3114624"
+    },
+    {
+      "repo": "The Ukraine War",
+      "message": "Replace stats section with live war duration countdown + key stats",
+      "date": "2026-07-18T17:03:08Z",
+      "sha": "4b2f71e"
+    },
+    {
+      "repo": "Cuban Missile Crisis",
+      "message": "Initial commit: Cuban Missile Crisis interactive narrative",
+      "date": "2026-07-15T12:37:20Z",
+      "sha": "512061a"
+    },
+    {
+      "repo": "The Ukraine War",
+      "message": "Fix CSS specificity bug: span:last-child was overriding hero-dur-num font-size, keeping numbers at .75rem. Wrap unit labels in explicit class.",
+      "date": "2026-07-18T17:13:47Z",
+      "sha": "5ac1a98"
+    },
+    {
+      "repo": "IR History Atlas",
+      "message": "Add GitHub Actions workflow for Pages deployment",
+      "date": "2026-07-18T21:32:54Z",
+      "sha": "756e5e3"
+    },
+    {
+      "repo": "Cuban Missile Crisis",
+      "message": "Add GitHub Pages deploy workflow",
+      "date": "2026-07-19T11:29:50Z",
+      "sha": "852f814"
+    }
+  ],
+  "totals": {
+    "events": 193,
+    "notes": 233,
+    "words": "62k"
+  },
+  "fetchedAt": "2026-07-19T11:50:16Z"
+}
