@@ -458,26 +458,83 @@ img { display: block; max-width: 100%; }
   gap: 0.4rem;
   flex-shrink: 0;
 }
-.card-link {
-  font-size: 0.72rem;
-  font-weight: 500;
-  padding: 0.65em 0.85em;
+.learn-more {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+  border: 0;
+  vertical-align: middle;
+  text-decoration: none;
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+  width: 9rem;
+  height: auto;
   min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-  border-radius: 6px;
-  border: 1px solid var(--border);
-  color: var(--text-2);
-  transition: all 0.25s var(--ease);
-  white-space: nowrap;
 }
-.card-link:hover {
-  border-color: var(--accent);
+.learn-more .circle {
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  position: relative;
+  display: block;
+  margin: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  background: var(--accent);
+  border-radius: 1.625rem;
+}
+.learn-more .circle .icon {
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background: #fff;
+}
+.learn-more .circle .icon.arrow {
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  left: 0.55rem;
+  width: 1rem;
+  height: 0.1rem;
+  background: none;
+}
+.learn-more .circle .icon.arrow::before {
+  position: absolute;
+  content: "";
+  top: -0.26rem;
+  right: 0.04rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-top: 0.1rem solid #fff;
+  border-right: 0.1rem solid #fff;
+  transform: rotate(45deg);
+}
+.learn-more .button-text {
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.6rem 0;
+  margin: 0 0 0 1.55rem;
   color: var(--accent);
-  background: rgba(122, 88, 40, .06);
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.6;
+  text-align: center;
+  text-transform: uppercase;
 }
-.card-link--repo {
-  background: var(--bg-alt);
+.learn-more:hover .circle {
+  width: 100%;
+}
+.learn-more:hover .circle .icon.arrow {
+  background: #fff;
+  transform: translate(0.9rem, 0);
+}
+.learn-more:hover .button-text {
+  color: #fff;
 }
 
 /* ═══ ACTIVITY FEED ═══ */
@@ -592,7 +649,7 @@ img { display: block; max-width: 100%; }
   .card-links {
     width: 100%;
   }
-  .card-link {
+  .learn-more {
     flex: 1;
     text-align: center;
   }
@@ -617,7 +674,7 @@ img { display: block; max-width: 100%; }
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
-.card-link:focus-visible {
+.learn-more:focus-visible {
   outline-offset: 2px;
 }
 
