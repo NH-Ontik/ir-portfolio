@@ -190,55 +190,62 @@ jobs:
           EOF
           )
 
-            RESPONSE=$(curl -s -X POST "https://api.cloudflare.com/client/v4/graphql" \
-              -H "Authorization: Bearer $CFLARE_API_TOKEN" \
-              -H "Content-Type: application/json" \
-              -d "$(jq -n --arg q "$QUERY" '{"query": $q}')")
+          RESPONSE=$(curl -s -X POST "https://api.cloudflare.com/client/v4/graphql" \
+            -H "Authorization: Bearer $CFLARE_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "$(jq -n --arg q "$QUERY" '{"query": $q}')")
 
-            # Parse summary
-            REQUESTS=$(echo "$RESPONSE" | jq -r '.data.viewer.zones[0].httpRequests1dGroups[0].sum.requests // 0')
-            VISITORS=$(echo "$RESPONSE" | jq -r '.data.viewer.zones[0].httpRequests1dGroups[0].sum.visitors // 0')
-            PAGEVIEWS=$(echo "$RESPONSE" | jq -r '.data.viewer.zones[0].httpRequests1dGroups[0].sum.pageViews // 0')
-            BYTES=$(echo "$RESPONSE" | jq -r '.data.viewer.zones[0].httpRequests1dGroups[0].sum.bytes // 0')
+          # Check for API errors
+          API_ERRORS=$(echo "$RESPONSE" | jq -r '.errors // empty')
+          if [ -n "$API_ERRORS" ]; then
+            echo "Cloudflare API errors for $KEY: $API_ERRORS"
+            continue
+          fi
 
-            # Format bandwidth
-            if [ "$BYTES" -gt 1073741824 ] 2>/dev/null; then
-              BANDWIDTH="$(echo "scale=1; $BYTES/1073741824" | bc)GB"
-            elif [ "$BYTES" -gt 1048576 ] 2>/dev/null; then
-              BANDWIDTH="$(echo "scale=1; $BYTES/1048576" | bc)MB"
-            elif [ "$BYTES" -gt 1024 ] 2>/dev/null; then
-              BANDWIDTH="$(echo "scale=1; $BYTES/1024" | bc)KB"
-            else
-              BANDWIDTH="${BYTES}B"
-            fi
+          # Parse summary (handle missing data gracefully)
+          REQUESTS=$(echo "$RESPONSE" | jq -r '.data.viewer.zones[0].httpRequests1dGroups[0].sum.requests // 0' 2>/dev/null || echo "0")
+          VISITORS=$(echo "$RESPONSE" | jq -r '.data.viewer.zones[0].httpRequests1dGroups[0].sum.visitors // 0' 2>/dev/null || echo "0")
+          PAGEVIEWS=$(echo "$RESPONSE" | jq -r '.data.viewer.zones[0].httpRequests1dGroups[0].sum.pageViews // 0' 2>/dev/null || echo "0")
+          BYTES=$(echo "$RESPONSE" | jq -r '.data.viewer.zones[0].httpRequests1dGroups[0].sum.bytes // 0' 2>/dev/null || echo "0")
 
-            # Parse top pages
-            TOP_PAGES=$(echo "$RESPONSE" | jq '[.data.viewer.zones[0].httpRequests1d[] | {
-              path: .dimensions.clientRequestURI,
-              count: (.sum.requests | tonumber)
-            }] | sort_by(-.count) | .[:5]')
+          # Format bandwidth
+          if [ "$BYTES" -gt 1073741824 ] 2>/dev/null; then
+            BANDWIDTH="$(echo "scale=1; $BYTES/1073741824" | bc)GB"
+          elif [ "$BYTES" -gt 1048576 ] 2>/dev/null; then
+            BANDWIDTH="$(echo "scale=1; $BYTES/1048576" | bc)MB"
+          elif [ "$BYTES" -gt 1024 ] 2>/dev/null; then
+            BANDWIDTH="$(echo "scale=1; $BYTES/1024" | bc)KB"
+          else
+            BANDWIDTH="${BYTES}B"
+          fi
 
-            # Build analytics object
-            ANALYTICS=$(jq -n \
-              --argjson requests "${REQUESTS:-0}" \
-              --argjson visitors "${VISITORS:-0}" \
-              --argjson pageviews "${PAGEVIEWS:-0}" \
-              --arg bandwidth "$BANDWIDTH" \
-              --argjson topPages "$TOP_PAGES" \
-              '{
-                uniqueVisitors: $visitors,
-                totalRequests: $requests,
-                pageViews: $pageviews,
-                bandwidth: $bandwidth,
-                topPages: $topPages
-              }')
+          # Parse top pages (handle missing/empty data)
+          TOP_PAGES=$(echo "$RESPONSE" | jq '[.data.viewer.zones[0].httpRequests1d[]? | {
+            path: .dimensions.clientRequestURI,
+            count: (.sum.requests | tonumber)
+          }] | sort_by(-.count) | .[:5]' 2>/dev/null || echo '[]')
 
-            # Add analytics to project
-            jq --arg key "$KEY" --argjson analytics "$ANALYTICS" \
-              '.projects[$key].analytics = $analytics' \
-              project-data.json > tmp.json && mv tmp.json project-data.json
+          # Build analytics object
+          ANALYTICS=$(jq -n \
+            --argjson requests "${REQUESTS:-0}" \
+            --argjson visitors "${VISITORS:-0}" \
+            --argjson pageviews "${PAGEVIEWS:-0}" \
+            --arg bandwidth "$BANDWIDTH" \
+            --argjson topPages "$TOP_PAGES" \
+            '{
+              uniqueVisitors: $visitors,
+              totalRequests: $requests,
+              pageViews: $pageviews,
+              bandwidth: $bandwidth,
+              topPages: $topPages
+            }')
 
-            echo "  Requests: $REQUESTS, Visitors: $VISITORS, Pages: $PAGEVIEWS, BW: $BANDWIDTH"
+          # Add analytics to project
+          jq --arg key "$KEY" --argjson analytics "$ANALYTICS" \
+            '.projects[$key].analytics = $analytics' \
+            project-data.json > tmp.json && mv tmp.json project-data.json
+
+          echo "  Requests: $REQUESTS, Visitors: $VISITORS, Pages: $PAGEVIEWS, BW: $BANDWIDTH"
           done
 
           echo "Generated project-data.json (with analytics):"
