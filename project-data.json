@@ -48,28 +48,7 @@
           "message": "Update Quartz engine to latest v5 branch",
           "sha": "ccc7358"
         }
-      ],
-      "analytics": {
-        "uniqueVisitors": 3,
-        "pageViews": 23,
-        "topPages": [
-          {
-            "path": "/NH-Ontik/international-relations-knowledge-base-by-nh-ontik",
-            "title": "Overview",
-            "count": 11
-          },
-          {
-            "path": "/NH-Ontik/international-relations-knowledge-base-by-nh-ontik/tree/main/content",
-            "title": "/tree/main/content",
-            "count": 2
-          },
-          {
-            "path": "/NH-Ontik/international-relations-knowledge-base-by-nh-ontik/tree/main/content/Courses",
-            "title": "/tree/main/content/Courses",
-            "count": 2
-          }
-        ]
-      }
+      ]
     },
     "history-atlas": {
       "label": "IR History Atlas",
@@ -101,12 +80,7 @@
           "message": "IR History Atlas — 173-event interactive timeline with YouTube explainer links",
           "sha": "07b02bd"
         }
-      ],
-      "analytics": {
-        "uniqueVisitors": 0,
-        "pageViews": 0,
-        "topPages": []
-      }
+      ]
     },
     "ukraine-war": {
       "label": "The Ukraine War",
@@ -156,28 +130,7 @@
           "message": "Replace stats section with live war duration countdown + key stats",
           "sha": "4b2f71e"
         }
-      ],
-      "analytics": {
-        "uniqueVisitors": 1,
-        "pageViews": 6,
-        "topPages": [
-          {
-            "path": "/NH-Ontik/ukraine-war",
-            "title": "Overview",
-            "count": 2
-          },
-          {
-            "path": "/NH-Ontik/ukraine-war/blob/master/Ukraine_War_Images",
-            "title": "/blob/master/Ukraine_War_Images",
-            "count": 1
-          },
-          {
-            "path": "/NH-Ontik/ukraine-war/tree/master",
-            "title": "/tree/master",
-            "count": 1
-          }
-        ]
-      }
+      ]
     },
     "cuban-missile": {
       "label": "Cuban Missile Crisis",
@@ -215,18 +168,7 @@
           "message": "Initial commit: Cuban Missile Crisis interactive narrative",
           "sha": "512061a"
         }
-      ],
-      "analytics": {
-        "uniqueVisitors": 1,
-        "pageViews": 2,
-        "topPages": [
-          {
-            "path": "/NH-Ontik/cuban-missile-crisis/blob/main/index.html",
-            "title": "/blob/main/index.html",
-            "count": 1
-          }
-        ]
-      }
+      ]
     }
   },
   "activity": [
@@ -296,5 +238,5 @@
     "notes": 233,
     "words": "62k"
   },
-  "fetchedAt": "2026-07-19T12:26:57Z"
+  "fetchedAt": "2026-07-19T13:19:48Z"
 }
