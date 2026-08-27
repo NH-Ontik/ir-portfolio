@@ -7,17 +7,29 @@
         "description": null,
         "forks": 0,
         "openIssues": 0,
-        "pushedAt": "2026-07-19T09:54:17Z",
+        "pushedAt": "2026-08-27T17:59:08Z",
         "stars": 0
       },
       "latestCommit": {
         "author": "NH-Ontik",
-        "date": "2026-07-19T09:54:15Z",
-        "message": "Update Quartz config: footer links, rag metadata display\n\n- Update footer GitHub link to point to KB repo instead of jackyzha0/quartz\n- Add Quartz credit link\n- Add rag to note-properties includedProperties for RAG metadata visibility",
-        "sha": "3114624"
+        "date": "2026-08-27T17:59:06Z",
+        "message": "Remove personal RAG retrieval metadata from frontmatter",
+        "sha": "f3867c1"
       },
       "commitCount": 5,
       "recentCommits": [
+        {
+          "author": "NH-Ontik",
+          "date": "2026-08-27T17:59:06Z",
+          "message": "Remove personal RAG retrieval metadata from frontmatter",
+          "sha": "f3867c1"
+        },
+        {
+          "author": "NH-Ontik",
+          "date": "2026-08-27T17:58:02Z",
+          "message": "De-personalize vault: remove student and course scaffolding for general IR knowledge base use",
+          "sha": "7e7ccf3"
+        },
         {
           "author": "NH-Ontik",
           "date": "2026-07-19T09:54:15Z",
@@ -35,18 +47,6 @@
           "date": "2026-07-18T10:11:03Z",
           "message": "Added cloudflare analytics",
           "sha": "f6ecfac"
-        },
-        {
-          "author": "NH-Ontik",
-          "date": "2026-07-18T10:10:52Z",
-          "message": "Added cloudflare analytics",
-          "sha": "9711a15"
-        },
-        {
-          "author": "NH-Ontik",
-          "date": "2026-07-14T17:13:41Z",
-          "message": "Update Quartz engine to latest v5 branch",
-          "sha": "ccc7358"
         }
       ]
     },
@@ -227,10 +227,10 @@
       "sha": "756e5e3"
     },
     {
-      "repo": "Cuban Missile Crisis",
-      "message": "Add GitHub Pages deploy workflow",
-      "date": "2026-07-19T11:29:50Z",
-      "sha": "852f814"
+      "repo": "IR Knowledge Base",
+      "message": "De-personalize vault: remove student and course scaffolding for general IR knowledge base use",
+      "date": "2026-08-27T17:58:02Z",
+      "sha": "7e7ccf3"
     }
   ],
   "totals": {
@@ -238,5 +238,5 @@
     "notes": 233,
     "words": "62k"
   },
-  "fetchedAt": "2026-08-27T08:00:28Z"
+  "fetchedAt": "2026-08-27T21:54:00Z"
 }
